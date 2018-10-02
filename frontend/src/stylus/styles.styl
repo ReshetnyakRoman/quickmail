@@ -1,0 +1,1754 @@
+@import 'nib' 
+@import 'import/*.styl'
+
+/*==========My Colors==========*/		
+/*icon animation*/
+.my-icon
+	position relative
+	cursor pointer
+.avatar-text
+	color $primary
+	background-color white
+	
+.my-icon::before
+	position absolute
+	display block
+	left 0.9rem
+	top 0.9rem
+	content ' '
+	width 0px
+	height 0px
+	background-color rgba(0,0,0, 0.1)
+	transition 0.2s ease-in-out
+	border-radius 50%
+	z-index -1
+.my-icon:hover::before
+	content ''
+	top -0.11rem
+	left -0.11rem
+	width 1.8rem
+	height 1.8rem
+.currnt-folder
+	white-space nowrap
+	color $primary
+	margin-left 16px
+.currnt-folder i.material-icons
+	font-size 30px
+	transform translateY(5px)
+.emailin-body
+	word-wrap break-word	
+.search-btn
+	margin-right 32px
+.my-icon2
+	position relative
+	cursor pointer
+.my-icon2::before
+	position absolute
+	display block
+	left 0.75rem
+	top 0.75rem
+	content ' '
+	width 0px
+	height 0px
+	background-color rgba(0,0,0, 0.1)
+	transition 0.2s ease-in-out
+	border-radius 50%
+	z-index -1
+.my-icon2:hover::before
+	content ''
+	top -0.00rem
+	left -0.00rem
+	width 1.6rem
+	height 1.6rem
+	
+
+	
+.my-font-size-xs
+	font-size .4rem
+.my-font-size-sm
+	font-size .6rem
+.my-font-size-md
+	font-size .8rem
+.my-font-size-normal
+	font-size 1rem
+.my-font-size-lg
+	font-size 1.2rem
+.my-font-size-xl
+	font-size 1.4rem	
+	
+.my-line-height-xs
+	line-height .4rem
+.my-line-height-sm
+	line-height .6rem	
+.my-line-height-md
+	line-height .8rem
+
+.my-color-blue
+	background-color $primary !important
+	color white !important
+.my-color-hover-blue:hover
+	background-color $primary-d2 !important
+.my-text-blue
+	color $primary !important
+.my-border-blue
+	border-color $primary !important
+.my-border-hover-blue:hover
+	border-color $primary-d2 !important	
+	
+.my-color-gray600
+	background-color $gray600 !important
+	color gray700 !important
+.my-color-hover-gray600:hover
+	background-color $gray900 !important
+.my-text-gray600
+	color $gray600 !important
+.my-border-gray600
+	border-color $gray600 !important
+.my-border-hover-gray600:hover
+	border-color $gray900 !important	
+
+.my-color-gray200
+	background-color $gray200 !important
+	color white !important
+.my-color-hover-gray200:hover
+	background-color $gray500 !important
+.my-text-gray200
+	color $gray200 !important
+.my-border-gray200
+	border-color $gray200 !important
+.my-border-hover-gray200:hover
+	border-color $gray500 !important
+.my-badge-light
+	background-color #f0f2f4
+	color #212529
+.my-badge-light[href]:hover, .my-badge-light[href]:focus 
+	background-color #d2d9df
+	
+.my-color-dark
+	background-color $dark
+	color white
+.my-color-hover-dark:hover
+	background-color $gray500 !important
+.my-text-dark
+	color $dark !important
+.my-border-dark
+	border-color $dark !important
+.my-border-hover-dark:hover
+	border-color $gray500 !important	
+/*==========My Buttons==========*/		
+.my-btn-primay	
+	background-color $primary !important
+	color white !important
+	border-color $primary !important
+.my-btn-primay:hover
+	background-color $primary-d2 !important	
+	border-color $primary-d2 !important
+	
+.my-btn-primay-bordered	
+	background-color white !important
+	color $primary !important
+	border-color $primary !important
+.my-btn-primay-bordered:hover
+	background-color $primary !important	
+	color white !important
+	border-color $primary !important	
+
+.my-btn-danger	
+	background-color $danger !important
+	color white !important
+	border-color $danger !important
+	padding 6px 6px 2px 6px
+	border-radius 4px
+	
+.my-btn-danger:hover
+	background-color $danger-d2 !important	
+	border-color $danger-d2 !important
+	
+.my-btn-success	
+	background-color $success !important
+	color white !important
+	border-color $success !important
+.my-btn-success:hover
+	background-color $success-d2 !important	
+	border-color $success-d2 !important
+
+.my-btn-outline-secondary
+	background-color transparent !important
+	color $secondary !important
+	border-color $secondary !important
+.my-btn-outline-secondary:hover	
+	background-color $secondary !important
+	color white !important
+	border-color $secondary !important
+
+.my-btn-outline-dark
+	background-color transparent !important
+	color $dark !important
+	border-color $dark !important
+	padding 10px 12px 6px 10px
+	margin-right 16px
+.my-btn-outline-dark:hover	
+	background-color $dark !important
+	color white !important
+	border-color $dark !important
+
+
+		
+
+/*==========Usefull classes==========*/
+.my-hr
+	border-style dotted
+	width 100%
+.my-line-align-up
+	transform translate(0%, -.5rem)
+.my-line-align-down
+	transform translate(0%, .5rem)
+.shorten-text
+	white-space nowrap
+	text-overflow ellipsis
+	overflow hidden	
+.display-none
+	display none
+.full-width
+	width 100%
+.full-height
+	height 100%
+.my-flex-align-center
+	justify-content center
+.my-flex-align-left
+	justify-content flex-start
+.my-cursor-pointer
+	cursor pointer
+.my-cursor-grab
+	cursor grab
+.my-cursor-help
+	cursor help
+.my-cursor-text
+	cursor text 
+.my-cursor-menu
+	cursor context-menu
+.my-space-between
+	justify-content space-between
+.my-hover-underline:hover
+	text-decoration underline
+.my-hover-dark:hover
+	background-color $dark
+	color white
+.my-hover-gray300:hover
+	background-color $gray300
+	color $gray500	
+.my-blur
+	filter blur(3px)
+.warnig-message
+	background-color $danger-l3
+	color $danger-d3
+	padding 16px
+	margin-bottom 16px 
+	border-radius 4px
+	border solid 1px $danger-l2
+	
+		
+/*==========General==========*/	
+body 
+	height 100vh
+.content
+	position relative
+	margin-left 150px	
+	padding 70px 32px 16px 32px
+	height 100vh
+	
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    color: #fff;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: .25rem;
+    font-size: 0.7rem;
+}
+
+.my-display-topright
+	position absolute
+	top 0
+	right 0
+	
+.tooltip.bs-tooltip-auto[x-placement^=top] .arrow::before, .tooltip.bs-tooltip-top .arrow::before {
+    margin-left: -3px;
+    content: "";
+    border-width: 5px 5px 0;
+    border-top-color: rgba(0, 0, 0, 0.6);
+}
+
+.tooltip.bs-tooltip-auto[x-placement^=bottom] .arrow::before, .tooltip.bs-tooltip-bottom .arrow::before {
+    margin-left: -3px;
+    content: "";
+    border-width: 0 5px 5px;
+    border-bottom-color: rgba(0, 0, 0, 0.6);
+}
+
+.tooltip.bs-tooltip-auto[x-placement^=left] .arrow::before, .tooltip.bs-tooltip-left .arrow::before {
+    right: 0;
+    margin-top: -3px;
+    content: "";
+    border-width: 5px 0 5px 5px;
+    border-left-color: rgba(0, 0, 0, 0.6);
+}	
+
+.tooltip.bs-tooltip-auto[x-placement^=right] .arrow::before, .tooltip.bs-tooltip-right .arrow::before {
+    margin-top: -0px;
+    content: "";
+    border-width: 5px 5px 5px 0;
+    border-right-color: rgba(0, 0, 0, 0.6);
+}
+
+.popover
+	box-shadow 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)	
+
+.my-modal
+	position fixed
+	height 100%
+	width 100%
+	top 0
+	left 0
+	z-index 25
+	background-color rgba(0,0,0, 0.3)
+	display flex
+	align-items center
+	justify-content center
+	
+.my-modal-container
+	display flex
+	flex-direction column
+	background-color white
+	border-radius 12px
+	padding 20px	
+	width 400px
+
+.my-modal-header
+	color black
+	
+	
+.my-modal-body
+	color black
+	padding 12px 0px
+	
+.my-modal-footer
+	text-align right
+	color black
+.my-modal-footer span.my-btn-primay
+	border-radius 8px
+
+		
+
+.badge-gray {
+  color: #212529;
+  background-color: red;
+}
+
+.badge-gray[href]:hover, .badge-gray[href]:focus {
+  color: #212529;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.1);
+}	
+	
+.avatar-circle
+	display inline-block
+	width 80px
+	height 80px
+	border 3px solid $primary
+	border-radius 100%
+	background-repeat no-repeat
+	background-position 50% 50%
+	background-size cover
+.avatar-circle:hover
+	box-shadow 0px 0px 10px #fff
+.avatar-sqare
+	display inline-block
+	min-width 80px
+	width 80px
+	height 80px
+	background-repeat no-repeat
+	background-position 50% 50%
+	background-size cover
+	
+.avatar-text
+	display inline-block
+	font-weight bold
+	font-size 1.5em
+	color $primary
+	height 80px
+	width 80px
+	min-width 80px
+	padding-top:24px
+	text-align center
+	border 1px solid $primary
+	
+/*==========Sidebar menu==========*/
+.mobile-menu-icon
+	position fixed
+	top 16px
+	left 14px
+	z-index 5
+	
+.nav-icon
+	width 28px
+	height 20px
+	position relative
+	transform rotate(0deg)
+	transition 0.5s ease-in-out
+	cursor pointer
+.nav-icon span
+	display block
+	position absolute
+	height 4px
+	width 50%
+	opacity 1
+	background-color $warning
+	transform rotate(0deg)
+	transition 0.25s ease-in-out
+.nav-icon span:nth-child(even)
+	left 50%
+	border-radius 0 4px 4px 0
+
+.nav-icon span:nth-child(odd)
+	left 0px
+	border-radius 4px 0px 0px 4px
+
+.nav-icon span:nth-child(1),.nav-icon span:nth-child(1)
+	top 0px
+.nav-icon span:nth-child(3),.nav-icon span:nth-child(4)
+	top 8px
+.nav-icon span:nth-child(5),.nav-icon span:nth-child(6)
+	top 16px
+
+.nav-icon.open span:nth-child(1), .nav-icon.open span:nth-child(6)
+	transform rotate(45deg)
+.nav-icon.open span:nth-child(2), .nav-icon.open span:nth-child(5)
+	transform rotate(-45deg)
+
+.nav-icon.open span:nth-child(1)
+	left 0px
+	top 4px
+.nav-icon.open span:nth-child(2)
+	left calc(50% - 7px)
+	top 4px
+.nav-icon.open span:nth-child(3)
+	left -50%
+	opacity 0
+.nav-icon.open span:nth-child(4)
+	left 100%
+	opacity 0
+.nav-icon.open span:nth-child(5)
+	left 0px
+	top 12px
+.nav-icon.open span:nth-child(6)
+	left calc(50% - 7px)
+	top 12px
+	
+.side-bar
+	opacity 1
+	width 150px	
+	height 100vh
+	position fixed
+	left 0
+	overflow auto
+	z-index 4
+	transition all .3s ease-in-out
+	
+.sidebar-menu
+	position relative
+	font-size 0.9rem
+
+.sidebar-menu ul
+	margin 0
+	list-style-type none
+	padding 0
+	color white
+.sidebar-menu li
+	position relative
+	padding 1rem 0.5rem 0rem 1rem
+	transition opacity 340ms ease
+	transition transform 340ms ease
+
+.onDrugHover
+	height 24px
+	width 80%
+	z-index -1
+	position absolute
+	background-color $warning
+	border-radius 4px
+	
+.onDrugHoverSub
+	height 90%
+	width 80%
+	z-index -1
+	top 50%
+	left 50%
+	transform translate(-50%,-50%)
+	position absolute
+	background-color $warning
+	border-radius 4px
+		
+.sidebar-menu li:nth-of-type(1)
+	transition-delay 40ms	
+.sidebar-menu li:nth-of-type(2)
+	transition-delay 80ms
+.sidebar-menu li:nth-of-type(3)
+	transition-delay 120ms
+.sidebar-menu li:nth-of-type(4)
+	transition-delay 160ms	
+
+.sidebar-menu li a
+	padding-left 4px
+	color white
+	text-decoration none
+	opacity 0.8
+	display inline-block
+	transition all 150ms ease
+	transform translateY(-0.5rem)
+
+.sidebar-menu li.isActive  a
+	opacity 1
+	transform translate(4px, -.5rem)
+.sidebar-menu li.isActive:before
+	transform translateX(0px)
+	transition all 150ms ease	
+.sidebar-menu li.isActive:hover a
+	transform translate(4px, -.5rem)
+	opacity 1
+
+.sidebar-menu li:hover a
+	opacity 1
+	transform translate(11px, -.5rem)	
+.sidebar-menu li:hover:before
+	transform translateX(0px)
+	transition all 150ms ease
+
+ul.inner-list li
+	position relative
+	padding 0.1rem 0.2rem 0.1rem 1rem
+
+ul.inner-list li a 
+	transform translateY(.1rem)
+	
+.sidebar-menu li:hover ul.inner-list li a 
+	transform translate(4px, .1rem)
+
+.sidebar-menu li ul.inner-list li:hover a
+	transform translate(8px, .1rem)	
+
+.sidebar-menu li.isActive ul.inner-list li a 
+	opacity 0.8
+	transform translateY(.1rem)
+
+.sidebar-menu li ul.inner-list li a 
+	opacity 0.8
+	transform translateY(.1rem)	
+
+.sidebar-menu li ul.inner-list li:hover a 
+	opacity 1
+	transform translateY(.1rem)	
+	
+.sidebar-menu li.isActive ul.inner-list li:hover a
+	transform translate(4px, .1rem)
+	opacity 1
+	
+.sidebar-menu li.isActive ul.inner-list li.isActive a 
+	opacity 1
+	transform translate(4px, 0rem)
+	
+.sidebar-menu li.isActive ul.inner-list li.isActive:hover a
+	transform translate(4px, 0rem)
+	opacity 1
+
+ul.inner-list li.isActive:before
+	transform translate(4px, 0rem)
+	
+ul.inner-list li:before
+	content ''
+	height 100%
+	position absolute
+	left -16px
+	top 0
+	background-color $success
+	width 9px
+	transform translateX(-3px)
+	z-index -1
+
+ul.inner-list li:hover:before
+	transform translateX(4px)
+
+ul.inner-list
+	padding 0 0 0 0 
+
+.delete-folder
+	font-size 18px
+	top 50%
+	transform translateY(-50%)
+	right 0px
+	position absolute
+	visibility none
+	transition opacity 0.3s ease-in-out
+	opacity 0
+
+li.inbox:hover .delete-folder
+	display inline-block
+	opacity 0.5	
+	visibility visible
+	transition opacity 0s
+	
+li.inbox:hover .delete-folder:hover
+	opacity 1
+	color $primary
+	
+.inboxItem:before
+	content ''
+	width 9px
+	height 100%
+	background-color $success
+	left 0
+	top 0
+	position absolute
+	transform translateX(-3px)
+	
+.draftItem:before
+	content ''
+	width 9px
+	height 100%
+	background-color $primary
+	left 0
+	top 0
+	position absolute
+	transform translateX(-3px)
+	
+.sentItem:before
+	content ''
+	width 9px
+	height 100%
+	background-color $danger
+	left 0
+	top 0
+	position absolute
+	transform translateX(-3px)
+
+.trashItem:before
+	content ''
+	width 9px
+	height 100%
+	background-color $warning
+	left 0
+	top 0
+	position absolute
+	transform translateX(-3px)
+	
+
+.new-email-btn-small
+	position fixed
+	bottom 0.7rem
+	right 0.7rem
+	border-radius 100%
+	background-color $danger
+	color white
+	margin 0
+	padding 0.5rem 0.5rem 0.1rem 0.5rem
+	box-shadow 5px 5px 15px rgba(0, 0, 0, 0.2)
+	z-index 3
+	
+.new-email-btn-small:hover
+	box-shadow 5px 5px 15px rgba(0, 0, 0, 0.4)
+
+
+.mailFrom-block:hover .mailFrom-popup
+	transform translate(0px,0px)
+	visibility visible
+	opacity 1
+	transition all 300ms ease
+	transition-delay .7s
+	
+.mailFrom-popup
+	visibility hidden
+	position absolute
+	border-radius 5px
+	box-shadow 0px 0px 10px rgba(0, 0, 0, 0.3)
+	background-color white
+	left 50px
+	padding 0.6rem
+	z-index 5
+	transform translate(10px,10px)
+	opacity 0
+.mailFrom-popup.invalid-email
+	background-color $warning !important
+	white-space nowrap
+	color black !important
+
+.account-block	
+	position relative
+	justify-content center
+	text-align center
+.account-block:hover .my-account-info
+	transform translateY(0px)
+	visibility visible
+	transition transform 300ms ease
+
+.my-account-info
+	position absolute
+	width 90%
+	top 122px
+	left 5%
+	z-index 4
+	transition all 0ms ease
+	visibility hidden
+	transform translateY(10px)
+	
+.my-account-info-settings
+	border-radius 10px
+	box-shadow 0 0 60px black
+	background-color $dark	
+	
+.triangle
+	position absolute
+	height 20px
+	width 20px
+	transform translate(-50% ,-50%) rotate(45deg)
+	background-color $dark
+	left 50%	
+
+.account-text
+	//height 2.4rem
+	white-space nowrap
+	//text-overflow ellipsis
+	overflow auto	
+	overflow -moz-scrollbars-none
+	padding 0.7rem
+	color white
+	font-size 0.65rem
+	font-weight lighter
+	z-index 1
+	width 95%
+.account-text::-webkit-scrollbar
+	display none
+.opt
+	height 50%
+.opt:after
+	content ''
+	position relative
+	display block
+	clear both
+
+.opt-item
+	width 50%
+	float left
+	height 2rem
+	position relative
+	text-align center
+	cursor pointer
+	
+.opt-item span
+	position absolute
+	left 50%
+	tip 50%
+	transform traslate(-50%,-50%)
+	width 100%
+	
+	
+.opt-item.isAccount
+	border-bottom-left-radius 10px
+	background-color $danger
+	color white
+	font-weight bold
+	font-size 65%
+	padding 10px 0
+	
+.opt-item.isAccount:hover
+	background-color $danger-d1
+
+.opt-item.isSetting
+	border-bottom-right-radius 10px
+	color white
+	font-weight bold
+.isSetting svg
+	width 100%
+	height 100%
+	stroke $secondary
+	fill $secondary
+			
+/*==========Top Menu==========*/
+	
+.topbar
+	max-height 4rem
+	border-bottom 1px solid $gray200
+	position fixed
+	width 100%	
+	padding-left 166px
+	left 0px
+	top 0px
+	background-color white
+	z-index 3
+	
+
+.topbar .search
+	color $gray700
+	margin-left 6px
+	border none
+	width 100%
+	outline-width 0
+.topbar .search::placeholder
+	color $gray200
+
+.logo
+	display flex
+	justify-content center
+	align-items center
+	border-radius 40px
+	text-align center
+	font-size 24px
+	color white
+	font-family "Times New Roman", cursive, sans-serif
+	
+.welcometext
+	color white
+	font-size 12px
+	
+	
+.logo-blue
+	color $primary
+.logo-red
+	color $danger			
+.logo img
+	height 2.5rem
+	
+
+/*==========Email related==========*/	
+.my-file-input
+	width 0.1px
+	height 0.1px
+	opacity 0
+	overflow hidden
+	position absolute
+	z-index -1
+
+label:hover i
+	cursor pointer
+
+.reply-section
+	border-radius 4px
+	margin 16px
+	box-shadow 0px 0px 10px rgba(0,0,0, 0.2)
+	
+.responsive-pading-x
+	padding-left 16px
+	padding-right 16px
+.responsive-pading-y
+	padding-top 16px
+	padding-bottom 16px
+
+.responsive-margin-x
+	margin-left 16px
+	margin-right 16px
+.responsive-margin-y
+	margin-top 16px
+	margin-bottom 16px
+.responsive-margin-t
+	margin-top 16px
+.responsive-margin-b
+	margin-bottom 16px
+					
+.my-attach-card
+	position relative
+	display inline-block
+	margin 16px
+	border 1px solid rgba(0,0,0, 0.2)
+
+.my-attach-card:hover
+	border 1px solid $primary
+	
+.my-attach-card .card-footer
+	border-top 1px solid rgba(0,0,0, 0.2)
+	background-color 1px solid rgba(0,0,0, 0.1)
+	font-weight bold
+	text-align center
+	font-size 0.7rem
+	max-height 50px
+	white-space nowrap
+	text-overflow ellipsis
+	overflow hidden	
+	max-width 130px
+	padding 0.5rem 0.3rem
+
+.my-attach-card .icon
+	text-align center	
+	padding 16px 36px
+	
+.my-attach-card .icon i
+	font-size 3.5rem
+	color $primary
+	
+.overlay	
+	position absolute
+	bottom 100%
+	left 0
+	right 0
+	background-color:$primary
+	overflow hidden
+	width 100%
+	height 0
+	transition 0.2s ease
+	text-align center
+	color white
+.overlay i
+	font-size 4rem
+	color white
+	padding 0 -10px
+	margin 0 -10px 
+
+.overlay p 
+	text-align center
+	white-space nowrap
+	text-overflow ellipsis
+	overflow hidden	
+	padding 4px 12px
+	margin-bottom 4px
+	
+.my-attach-card:hover .overlay
+	bottom 0
+	height 100%	
+	
+.snippet
+	white-space nowrap
+	text-overflow ellipsis
+	overflow hidden	
+	color rgba(1,0,0, 0.5)
+	width 85%
+			
+.receivingDate
+	position absolute
+	right 1%
+	top 50%
+	transform translate(-0%, -50%)
+	display inline-block
+	
+.receivingDate-short
+	flex-align stretch
+	white-space nowrap
+
+
+.attachments-ind
+	display inline-block
+	color rgba(0,0,0,0.5)
+	text-align center
+
+.attachments-ind-position	
+	position absolute
+	right 1%
+	top 50%
+	transform translate(-0%, -50%)
+
+/*-----Email List----*/	
+
+
+
+.emailIn-style
+	box-sizing border-box
+	background-color white
+	position absolute
+	top 60px
+	left 0px
+	width calc(100% - 1rem)
+	border 1px solid $border
+	padding 0.5rem 0.5rem
+	margin 0.5rem
+	flex-direction column
+	z-index 2
+
+
+.emailListItem
+	background-color white
+	max-width 100%
+	flex-wrap nowrap
+	position relative
+	height 100%
+	max-height 81px
+
+.emailListItem:hover
+	box-shadow 0px 0px 10px rgba(0, 0, 0, 0.1)
+
+.emailListItem:hover i:nth-of-type(1)
+	opacity 1
+	transform translateY(0px)
+	transition-delay 50ms
+
+.emailListItem:hover i:nth-of-type(2)
+	opacity 1
+	transform translateY(0px)
+	transition-delay 100ms
+	
+
+.emailListItem:hover i:nth-of-type(3)
+	opacity 1
+	transform translateY(0px)
+	transition-delay 150ms
+
+.emailListItem-border-right
+	border-top 1px solid $gray100
+	border-right 1px solid $gray100
+	border-bottom 1px solid $gray100
+		
+/*-----Email Controls----*/
+.email-controls
+	display block
+	position relative
+	width 180px
+	z-index 2
+	flex-wrap nowrap
+	align-items flex-start
+	color $gray700
+
+.email-controls i
+	cursor pointer
+	border 1px solid rgba(0, 0, 0, 0.07)	
+	font-size 1rem
+	margin 0.5 rem
+	border-radius 50%
+	padding 0.3rem
+	background-color white
+
+.email-controls i:hover
+	box-shadow 0px 0px 10px rgba(0, 0, 0, 0.1)	
+	
+.email-controls-short
+	cursor pointer
+	display block
+	position absolute
+	top -1.4rem
+	right 10%	
+	width 150px
+	z-index 2
+	flex-wrap nowrap
+	align-items flex-start
+	color $gray700
+	
+.email-controls-short i	
+	opacity 0
+	font-size 1rem
+	margin 0.5 rem
+	border-radius 100%
+	padding 0.3rem
+	background-color white
+	box-shadow 0px 0px 10px rgba(0, 0, 0, 0.1)	
+	transition all 200ms ease
+	transform translateY(10px)
+	
+
+
+.emailOut-style
+	z-index 10
+	position absolute
+	bottom 8px
+	right 16px
+	background-color white
+	display flex
+	flex-direction column
+	min-height 600px
+	max-height 70vh
+	max-width calc(100vw * 0.7)
+.email-body
+	position relative
+	flex-grow 8
+	display flex
+	margin 20px
+	margin-bottom 0px 
+	
+.email-body > div
+	display flex
+	
+.email-body > div > div>.DraftEditor-root
+	height calc(100% - 50px)
+	overflow auto
+.dropZone
+	justify-content center
+	align-items center
+	position absolute
+	background-color rgba(32, 168, 216, 0.2)
+	border 3px $primary dashed
+	color $primary
+	height 100%
+	width 100%
+	text-align center 
+	font-size 40px
+	vertical-align baseline
+	
+	
+	
+.collapse-details
+	margin-top 0
+	padding-top 0
+	justify-content flex-start
+.collapse-details i
+	padding 0
+	margin 0
+	line-height 1rem
+	
+
+.emailInfo
+	width 100%
+	max-width 100%
+	white-space nowrap
+	text-overflow ellipsis
+	overflow hidden
+	border-top 1px solid $gray100
+	border-bottom 1px solid $gray100
+
+.my-email-header-input
+	display inline-block 
+	border none
+	flex-grow 8
+	padding 0
+	margin 0
+	outline-width 0
+	font-size 0.8rem
+.my-email-header-input::placeholder
+	color rgba(0,0,0,0.5) !important
+	
+.my-email-header-input-prepend	
+	height 1.5rem
+	line-height 1.5rem !important
+	font-size 0.8rem
+.badge-close:hover
+	border-radius 4px
+	background-color rgba(0, 0, 0, 0.2)
+.attached-doc
+	display inline-block
+	background-color rgba(0, 0, 0, 0.05)
+	
+.attached-doc:hover,.attached-doc:hover:focus
+	background-color rgba(0, 0, 0, 0.15)
+.emailOutTitle
+	height 3rem
+	margin-bottom 12px
+	
+.emailOutTitle i
+	color white !important
+	padding 0
+	margin 0
+	
+.emailOutTitleReply
+	border-radius 4px
+	height 3rem
+	background-color white !important
+.emailOutTitleReply i
+	color $primary !important
+	padding 0
+	margin 0
+	
+
+.my-send-button
+	background-color $primary !important
+	color white !important
+	border-color $primary !important
+	maring-right 16px
+	padding-left 16px
+	padding-right 16px
+.my-send-button:hover
+	background-color $primary-d2 !important	
+	border-color $primary-d2 !important
+/*==========Modal related==========*/
+/*.my-modal
+	z-index 3
+	display none
+	padding-top 100px
+	position fixed
+	left 0
+	top 0
+	width 100%
+	height 100%
+	overflow auto
+	background-color rgba(0,0,0,0.4)
+.my-modal-content 
+	margin auto
+	background-color #fff
+	position relative
+	padding 0
+	outline 0
+	width 600px	
+
+.my-modal-backdraw-white
+	z-index 7
+	padding-top 100px
+	position fixed
+	left 0
+	top 0
+	width 100%
+	height 100%
+	overflow auto
+	background-color rgba(255,255,255,0.4)*/
+
+.my-addFolder
+	width 280px
+	padding 24px
+	z-index 8
+	position fixed
+	top 50%
+	left 50%
+	transform translate(-50%, -50%)
+	background-color white
+	border 1px solid $gray200
+	box-shadow 0px 0px 10px rgba(0,0,0, 0.2)
+.my-addFolder input
+	width 100%
+	margin 16px 0px
+	border none
+	border-bottom 1px solid $gray300
+	outline 0px
+.my-addFolder input::placeholder
+	color $gray300	
+
+.my-notification
+	max-width 600px
+	padding 12px 24px
+	z-index 8
+	position fixed
+	top 100px
+	left 50%
+	transform translate(-50%, -50%)
+	background-color $warning-l3
+	box-shadow 0px 0px 10px rgba(0,0,0, 0.2)
+
+.my-myprogress
+	width 50%
+	z-index 8
+	position fixed
+	border-radius 5px
+	top 85px
+	left 50%
+	transform translate(-50%, -50%)
+	transition width 1s linear
+	background-color transparent
+	border 0px solid $gray300
+	box-shadow 0px 0px 15px rgba(0,0,0, 0.2)
+	animation progressAnimation 30s  
+@keyframes progressAnimation {
+	0% {
+		width 0
+	}
+	100% {
+		width 50%
+	}
+	}
+/*-----LogonWindow----*/
+.login
+	position fixed	
+	width 100%
+	height 100%
+	top 0%
+	left 0%
+	z-index 20
+	background-image url('/img/lights.jpg')
+	background-repeat no-repeat
+	background-size cover
+
+.gradient
+	top 20
+	left 0
+	position fixed
+	animation gradientAnimation 60s linear infinite
+	z-index 1
+	opacity 0.5
+	width 100%
+	height 100%
+	background-color #f35626
+.login-inner
+	position fixed	
+	z-index 2
+	top 0%
+	left 0
+	width 100%
+	height 100%
+	display flex
+	align-items center
+	justify-content center	
+.login-content
+	display inline-block
+	text-align center
+.log-in-hr
+	border-color honeydew
+	border-width 1px
+
+.btn-vk, .btn-fb
+	position relative
+	width 230px
+	height 40px
+	border-radius 80px
+	color white
+	font-family tahoma
+	font-size 12px!important
+	outline 0
+	border none
+	cursor pointer
+
+.btn-vk
+	background-color #5181b8
+.btn-fb
+	background-color #3b5998
+
+.btn-vk:hover
+	background-color #3b6391
+	opacity 0.8
+.btn-fb:hover
+	background-color #2b406e
+	opacity 0.8
+.btn-vk img, .btn-fb img
+	height 40px
+	width 40px
+	border-radius 50%
+	background-color rgba(255,255,255,0.2)
+	padding 6px
+	position absolute
+	top 0px
+	right 0px	
+	
+.about-block
+	color white
+	font-size 10px
+	padding-top 3rem
+	cursor pointer
+.about-block:hover
+	text-decoration underline	
+		
+.about-block:hover .about-popup
+	transform translate(-50%px,0px)
+	visibility visible
+	opacity 1
+	transition all 300ms ease
+	transition-delay 0.5s
+
+
+.about-popup
+	width 320px
+	color white
+	font-size 11px
+	visibility hidden
+	position absolute
+	border-radius 5px
+	box-shadow 0px 0px 10px rgba(0, 0, 0, 0.3)
+	background-color rgba(255,255,255,0.2)
+	left 0%
+	padding 0.6rem
+	z-index 5
+	transform translate(0px,20px)
+	opacity 0
+	text-align left
+.about-popup ul
+	padding-left 20px
+	padding-top 10px
+	padding-bottom 10px
+
+
+	
+/*-----Loader----*/
+@keyframes gradientAnimation {
+	0% {
+		background-color #00b487 //mint
+	}
+	10% {
+		background-color #b71f93 //purle
+	}
+	20% {
+		background-color #0056bc //blue
+	}
+	30% {
+		background-color #00b487 //mint
+	}
+	40% {
+		background-color #0056bc //blue
+	}
+	50% {
+		background-color #b71f93 //purle
+	}
+	60% {
+		background-color #0056bc //blue
+	}
+	70% {
+		background-color #00b487 //mint
+	} 
+	80% {
+		background-color #b71f93 //purle
+	}
+	90% {
+		 	background-color #00b487 //mint
+		 }
+	100% {
+		background-color #0056bc  //blue
+	}  
+}
+
+.main-loader
+	position fixed
+	align-items center
+	justify-content center
+	width 100%
+	height 100%
+	top 0%
+	left 0%
+	background-color white
+	z-index 10
+	display flex
+	
+.loader-container
+	width 400px
+	height 400px
+	border-radius 20%
+	display flex
+	justify-content center
+	align-items flex-end
+	position relative
+.main-loader .progress-bar
+	width calc(100vw * 0.5)
+	animation progressAnimation2 45s linear
+@keyframes progressAnimation2 {
+	0% {
+		width 0
+	}
+	100% {
+		width width calc(100vw * 0.5)
+	}
+	}
+
+.envelope
+	background-color #3267D5
+	width 300px
+	height 180px
+	margin 0 auto 100px auto
+	border-top 0px solid #ECECEC
+	border-radius 20px
+	position relative
+	overflow hidden
+.envelope .envelope-left
+	width: 0
+	height: 0
+	border-style solid
+	border-width 0 270px 170px 0
+	border-color transparent transparent #2AB6F6 transparent
+	position absolute
+	left: 0
+	bottom: 0
+.envelope .envelope-right
+	width 0
+	height 0
+	border-style solid
+	border-width 0 0 170px 270px
+	border-color transparent transparent #81D2F9 transparent
+	position absolute
+	right 0
+	bottom 0
+.envelope-content
+	width 70px
+	height 20px
+	background-color #E0E0E0
+	transform rotate(45deg)
+	position absolute
+	left 150px
+	top 180px
+	z-index 11
+	animation open 3s linear infinite
+	opacity 0
+	
+.envelope-content::after
+	content ''
+	width 200%
+	height 100%
+	background-color #E0E0E0
+	position absolute
+	left -10px
+	bottom 60px
+	transform rotate(-90deg)
+	
+.envelope-top
+	width 0
+	height 0
+	border-style solid
+	border-color transparent transparent #2A55C5 transparent
+	position absolute
+	top 16px
+	animation flip 3s linear infinite
+	perspective 800px
+	transform-origin 100% 100%
+	
+@keyframes open {
+	0%, 20% {
+		opacity 0
+		top 16px
+	}
+	20%,50% {
+		opacity 0
+	}
+	55%,100% {
+		opacity 1
+		top 155px
+	}
+}	
+
+@keyframes flip {
+	0%,60% {
+		border-width 0 144px 110px 144px
+		transform rotate3d(1,0,0, 180deg)
+	}
+	60%,100% {
+		border-width 0 144px 110px 144px
+		transform rotate3d(1,0,0, 0deg)
+	}
+}
+	
+.my-loader-container
+	width 100%
+	height 100%
+	top 0%
+	left 0%
+	padding 0
+	z-index 8
+	position fixed
+	justify-content center
+	align-items center
+	background-color rgba(255,255,255,0.3)
+	
+.loader
+	width 10rem
+	height 10rem
+	font-size 25px
+	border-top 0.3rem solid hotpink
+	border-radius 50%
+	position relative
+	animation rotating 2s ease-in-out infinite
+	--direction 1
+	background-color rgba(255,255,255,0.69)
+	
+.loader::before,
+.loader::after
+	content ''
+	position absolute
+	width inherit
+	height inherit
+	border-radius 50%
+	top -0.2rem
+
+.loader::before
+	border-top 0.3rem solid dodgerblue
+	transform rotate(120deg)
+
+.loader::after
+	border-top: 0.3rem solid gold
+	transform translateX(-100%) rotate(240deg) 
+	
+.loader span
+	display inline-block
+	postion absolute
+	color $dark
+	width inherit
+	height inherit
+	text-align center
+	line-height 10rem
+	font-size 16px
+	animation rotating 2s linear infinite
+	--direction -1
+	
+@keyframes rotating {
+	50% {
+		transform rotate(calc(180deg * var(--direction)))
+	}
+	100% {
+		transform rotate(calc(360deg * var(--direction)))
+	}
+}
+
+		
+/*==========Small/old mobile==========*/
+@media (max-width: 375px)
+	.avatar-sqare
+		display none 
+	.reciving-date-mobile	
+		position relative
+		width 100%
+		float left !important
+		display block !important
+		margin 0.5rem 0.1rem
+	.reciving-date-mobile:after
+		content 
+		claer both
+		overflow auto
+	.attachments-ind-position	
+		position absolute
+		right 1%
+		top 10%
+		transform translate(-0%, -50%)
+
+  	
+/*==========Modern mobile==========*/		
+@media (max-width: 768px)
+	.my-modal-container
+		width 400px
+	.emailOut-style
+		width 100vw
+		max-width 100vw
+		height 100vh
+		min-height 300px
+		max-height 100vh
+		top 0
+		right 0
+	.search-btn
+		margin-right 8px
+	
+	.email-body
+		margin-bottom 0px
+		
+	.email-body > div
+		align-items stretch
+		
+	.email-body > div > div>.DraftEditor-root
+		height calc(100% - 86px)
+		max-height calc(80vh - 86px)
+
+	.email-body > div > div>.editor-toolbar
+		flex-grow 1
+			
+	.topbar
+		width 100vw
+		padding-left 60px
+		
+	.my-hide-mobile
+		display none
+	
+	.content
+		margin-left 0px	
+		padding-left 10px
+		padding-right 10px
+
+	.emailInfo
+		border-top 1px solid $gray100
+		border-bottom 1px solid $gray100
+		border-left 1px solid $gray100
+		
+	.email-controls-short
+		top -0.7rem
+		right -6px	
+		width 150px
+	.email-controls-short i
+		font-size 1.4rem
+	.side-bar
+		opacity 0
+		width 0
+	.sidebar-menu
+		font-size 1.2rem	
+	.menu-width-opacity
+		width 100% 
+		opacity 1 	
+	.my-attach-card
+		margin 6px		
+	.my-btn-outline-dark
+		border-radius 50%
+		padding 11px 12px 5px 12px	
+	.emailIn-footer
+		justify-content space-around
+	.arrow-left
+		width 100px 	
+	.mailFrom-block:hover .mailFrom-popup
+		transition-delay .3s
+	
+	.mailFrom-popup		
+		left 20px
+	.my-send-button 
+		border none
+		color rgba(0,0,0,0.5) !important
+		background-color white !important
+	.my-myprogress
+		width 70%
+	
+	/*-----Main Loader-----*/	
+	.loader-container
+		width 200px
+		height 200px
+		border-radius 20%
+		
+	.envelope
+		background-color #3267D5
+		width 150px
+		height 90px
+		margin 0 auto 20px auto
+		border-top 2px solid #ECECEC
+		border-radius 10px
+
+	.envelope .envelope-left
+		border-width 0 135px 85px 0
+		
+	.envelope .envelope-right
+		border-width 0 0 85px 135px
+		
+	.envelope-content
+		width 35px
+		height 10px
+		left 75px
+		top 90px
+		animation open-small 3s linear infinite
+		
+	.envelope-content::after
+		left -5px
+		bottom 30px
+
+		
+	.envelope-top
+		top 38px
+		animation flip-small 3s linear infinite
+	
+	@keyframes flip-small {
+		0%,60% {
+			border-width 0 72px 55px 72px
+			transform rotate3d(1,0,0, 180deg)
+		}
+		60%,100% {
+			border-width 0 70px 55px 70px
+			transform rotate3d(1,0,0, 0deg)
+		}
+	}
+		
+	@keyframes open-small {
+		0%, 20% {
+			opacity 0
+			top 160px
+		}
+		20%,50% {
+			opacity 0
+		}
+		55%,100% {
+			opacity 1
+			top 90px
+		}
+	}	
+	
+	.reply-section
+		margin 16px 0px
+	
+	.responsive-pading-x
+		padding-left 6px
+		padding-right 6px
+	.responsive-pading-y
+		padding-top 6px
+		padding-bottom 6px
+	
+	.responsive-margin-x
+		margin-left 6px
+		margin-right 6px
+	.responsive-margin-y
+		margin-top 6px
+		margin-bottom 6px
+		
+	.responsive-margin-t
+		margin-top 6px
+	.responsive-margin-b
+		margin-bottom 6px
+		
+		
+/*==========Desctorp only==========*/		
+@media (min-width:769px)
+	.new-email-btn-small
+		display none
+	.my-hide-desktop
+		display none	
+	

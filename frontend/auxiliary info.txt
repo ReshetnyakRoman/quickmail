@@ -1,0 +1,54 @@
+main:
+blue: #039BE5
+red: #E2664D
+yellow:#F6C953
+green:#67B36F
+
+red-strong:#ff0000
+text-black-50:rgba(0, 0, 0, 0.5)
+gray-primary #dee2e6
+dark-background #19212B
+
+
+blue:
+100% 		 #ffffff
+95% 		 #e6f6ff
+90% 		 #cdeefe
+85% 		 #b4e5fe
+80% 		 #9bdcfd
+75% 		 #81d4fd
+70% 		 #68cbfd
+65% 		 #4fc3fc
+60% 		 #36bafc
+55% 		 #1db1fc
+50% 		 #04a9fb
+45% 	
+
+ 	#039be5
+40% 		 #0387c9
+35% 		 #0376b0
+30% 		 #026597
+25% 		 #02547e
+20% 		 #024364
+15% 		 #01334b
+10% 		 #012232
+5% 		 	 #001119
+0% 		 	 #000000
+
+z-index:
+
+email-controls-short 2
+email-controls 2
+topbar 3
+new-email-btn-small 3
+side-bar 4
+my-account-info 4
+mobile-menu-icon 5
+mailFrom-popup 5
+my-modal-backdraw 7
+my-contact-list 8
+main-loader 10
+login 20
+email-new 10
+emaiil-in
+modal 25

@@ -1,0 +1,21 @@
+conntect to mysql:
+mysql -u root -p;
+
+создание базы данных:
+mysql> CREATE DATABASE QUICKMAIL CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+создание пользователя для этой базы данныз, под которым будем вносить изменения:
+mysql> GRANT ALL PRIVILEGES ON QUICKMAIL.* TO 'quickmail'@'localhost' IDENTIFIED BY 'quickmail'; //(password)
+
+удаление таблицы из бд
+mysql> DROP TABLE table_name;
+
+если у нас есть готовые модели, запускаем приложение под консолью
+$ python start.py shell
+
+и в интерпритаторе выполняем команду:
+>>> db.create_all()
+>>> exit()
+
+и запускаем назад наш сервер:
+$ python start.py runserver

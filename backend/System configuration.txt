@@ -1,0 +1,51 @@
+1) СОЗДАЕМ ГРУППЫ И ПОЛЬЗОВАТЕЛЕЙ QUICKMAIL
+
+
+$ sudo groupadd quickmail
+$ sudo useradd -s /bin/false -d /home/quickmail/ quickmail -g quickmail
+когда нужен логин под пользователем
+$ sudo su - quickmail -s /bin/bash
+
+добавляем меня в группу quickmail, что бы иметь возможность заливать файлы в папку приложения
+Добавляем группу nginx во владельцы папкой, и даем ей прова на чтение и исполнение
+$ sudo chown -cR quickmail:nginx /home/quickmail
+$ sudo chmod -R 0775 /home/quickmail
+$ sudo usermod -a -G quickmail roman
+
+
+создани пользователя testuser2 одной командой
+$ sudo useradd  -G {usergroup} -d /home/{username} -s /bin/false -p $(echo {userpassword} | openssl passwd -1 -stdin) {username}
+удаление пользователя:
+$ sudo userdel -r testuser
+
+
+2) НАСТРАИВАЕМ NGINX
+sudo vim /etc/nginx/sites-available/quickmail.conf
+
+===================quickmail.conf=================
+upstream uwsgi_flask_upstream {
+	server unix:/home/quickmail/flask-uwsgi.sock;
+}
+
+server {
+	listen 80;
+	server_tokens off;
+	server_name mail.stepanich.ru;
+  
+  location / {
+  		root /home/quickmail/test
+  		index  index.html index.htm;
+       #include uwsgi_params;
+       #uwsgi_pass uwsgi_flask_upstream;
+   }
+
+}
+
+==================================================
+
+активируем этот конфиг:
+$ sudo ln -s /etc/nginx/sites-available/quickmail.conf /etc/nginx/sites-enabled/
+проверяем 
+$ sudo nginx -t
+запускаем 
+$ sudo nginx -s reload
