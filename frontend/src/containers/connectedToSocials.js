@@ -1,4 +1,5 @@
 import React from 'react' 
+import {vkAppID, FbAppID} from '../config'
 
 function Deferred() {
   var self = this
@@ -32,7 +33,7 @@ export default function connectedToSocials (WrappedComponent) {
 
       window.fbAsyncInit = function() {
           window.FB.init({
-            appId            : '1944357025611194',
+            appId            : FbAppID,
             autoLogAppEvents : true,
             xfbml            : true,
             version          : 'v3.1'
@@ -55,7 +56,7 @@ export default function connectedToSocials (WrappedComponent) {
 
       window.vkAsyncInit = function() {
         window.VK.init({
-          apiId: 6669338
+          apiId: vkAppID
         })
         window.vkLoaded.resolve()
       }
@@ -64,7 +65,8 @@ export default function connectedToSocials (WrappedComponent) {
     }
 
     componentDidMount () {
-      this.loadFBSDK()
+      // uncoment below line to allow Facebook login
+      //this.loadFBSDK() 
       this.loadVKSDK()
     }
 

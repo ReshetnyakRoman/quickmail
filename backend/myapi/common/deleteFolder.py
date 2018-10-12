@@ -1,9 +1,9 @@
 def deleteFolder(Mailbox, folderName):
 	try:
 		Mailbox.delete_folder(folderName)
-		print('Folder %s deleted' % (folderName))
+		print('\nFolder %s deleted\n' % (folderName))
 		return True
 	except:
-		print('No such folder')
+		print('deleteFolder() Error: No such folder')
 		return False
 	

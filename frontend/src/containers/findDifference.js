@@ -26,7 +26,7 @@ function findDifference (newData, component) {
     
     //removing non existing folders
     for (let folder in prevState.emailList){
-      if ( !(allNewFolders.includes( folder )) && !prevState.emailList[folder].default) {
+      if ( !(allNewFolders.indexOf( folder ) !== -1) && !prevState.emailList[folder].default) {
         delete prevState.emailList[folder]
       }
     }

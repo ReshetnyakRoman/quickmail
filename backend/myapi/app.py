@@ -30,15 +30,7 @@ def create_app(config_name):
 	config[config_name].init_app(app)
 	db.init_app(app)
 
-	api_bp = Blueprint('api', __name__)
-	api = Api(api_bp)
-		
-	from myapi.main import main as main_blueprint #to delete
-	app.register_blueprint(main_blueprint) #to delete
-
-	app.register_blueprint(api_bp, url_prefix='/api/v1')
-
-#=======API DESRIPTION=======#
+#=======REST API DESRIPTION=======#
 #POST /<folder> -  create folder
 #DELETE /<folder> - remove folder with all emails
 #GET /folder/ - give list of emails in particular folder (read list of items)
@@ -55,7 +47,9 @@ def create_app(config_name):
 #GET /update - update Mailboxes data (last email UID, number of unseen)
 #GET /search?keyword='sdfsd'
 
-	
+	api_bp = Blueprint('api', __name__)
+	api = Api(api_bp)
+	app.register_blueprint(api_bp, url_prefix='/api/v1')
 	api.add_resource(auth, '/auth',)
 	api.add_resource(logout, '/logout') 
 	api.add_resource(send, '/send') 

@@ -2,12 +2,12 @@ from flask_restful import Resource, reqparse, fields, marshal_with
 from flask import request, current_app
 from ..common.isSocialUserValid import isFBUserValid, isVKUserValid
 from ..common.createResponseBody import createResponseBody
-from ..common.IMAPMailbox import makeNewIMAPconnection
+#from ..common.IMAPMailbox import makeNewIMAPconnection
+from ..common.cleanUserDerictory import cleanUserDerictory
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..models.users import Users
 
 folders_fields = {
-  #'lastUID':fields.Integer, 
   'folder':fields.String,
   'unreaded':fields.Integer, 
   'default':fields.Boolean,
@@ -24,23 +24,15 @@ resource_fields={
 
 class auth(Resource):
   @marshal_with(resource_fields)
-  def post(self):
-    #Помнять строчки логина и пароля после тестирования
-    MAIL_USERNAME = 'registration'
-    MAIL_PASSWORD = 'Registration_2001'
-
-
+  def post(self):    
     if request.is_json:
       content = request.get_json(silent=True)
 
       isUserValid = isVKUserValid if content['loginType'] == 'VK' else isFBUserValid
 
       if isUserValid(content):
-        print('{0}-user successfuly pass authentification'.format(content['loginType']) )
-        Mailbox =  makeNewIMAPconnection()
-        Mailbox.login(MAIL_USERNAME, MAIL_PASSWORD)
-        responseBody = createResponseBody(content, Mailbox)
-        Mailbox.logout()
+        print('\n{0}-user successfuly pass authentification'.format(content['loginType']) )
+        responseBody = createResponseBody(content)
         return  responseBody, 200, {'Content-Type':'application/json'}
       
       else:
@@ -63,16 +55,14 @@ class logout(Resource):
   @marshal_with(resource_fields2)
   def get(self):
     if request.headers.get('ID') == get_jwt_identity():
-      #Помнять строчки логина и пароля после тестирования
-      MAIL_USERNAME = 'registration'
-      MAIL_PASSWORD = 'Registration_2001'
       userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
-      #MAIL_USERNAME = userInfo.osUserName
-      #MAIL_PASSWORD = userInfo.password
+      MAIL_USERNAME = userInfo.osUserName
+      MAIL_PASSWORD = userInfo.password
       
-      print('User with ID: {0} logout'.format(
+      print('\nUser with ID: {0} logout\n'.format(
         request.headers.get('ID')) )
 
+      cleanUserDerictory(request.headers.get('ID'))
       
       responseBody = {'success':True, 'message':'Good bye!',}
       return  responseBody, 200, {'Content-Type':'application/json'}

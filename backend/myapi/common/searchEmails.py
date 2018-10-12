@@ -29,7 +29,6 @@ def searchEmails(MAIL_USERNAME,MAIL_PASSWORD,IMAP_HOST,string, folders=['INBOX']
 		
 		for folder in folders:
 			folderNormalised = _normalise_folder(folder)
-			#print( M.select('"{}"'.format(folder)) )
 			M.select(folderNormalised)
 			
 			rawResponse = M.uid('search','CHARSET', 'UTF-8', 'TEXT' ,'"{}"'.format(string).encode('UTF-8') )
@@ -44,6 +43,7 @@ def searchEmails(MAIL_USERNAME,MAIL_PASSWORD,IMAP_HOST,string, folders=['INBOX']
 		M.logout()
 		print(totalUIDs)
 	except:
+		print('searchEmails() Error: cant make search or nothing found')
 		pass
 	return totalUIDs
 

@@ -37,13 +37,13 @@ class email(Resource):
   @marshal_with(resource_fields)
   def get(self, folder, uid):
     #Помнять строчки логина и пароля после тестирования
-    MAIL_USERNAME = 'registration'
-    MAIL_PASSWORD = 'Registration_2001'
+    #MAIL_USERNAME = 'registration'
+    #MAIL_PASSWORD = 'Registration_2001'
+
     userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
-    
     print(userInfo)
-    #MAIL_USERNAME = userInfo.osUserName
-    #MAIL_PASSWORD = userInfo.password
+    MAIL_USERNAME = userInfo.osUserName
+    MAIL_PASSWORD = userInfo.password
     parser = reqparse.RequestParser()
     parser.add_argument('keepUnseen', help='flasg to keep message unseen')
     args = parser.parse_args()

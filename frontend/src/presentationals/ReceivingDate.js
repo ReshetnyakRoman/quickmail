@@ -11,7 +11,7 @@ export default function ReceivingDate (props) {
     dateShortHand.toLocaleString('ru-RU', { year: 'numeric', month: 'short', day: 'numeric' })
 
   return (
-    <div className={`small text-black-50 d-flex ${positioning} ${props.className}`}>
+    <div className={`small text-black-50 shorten-text d-flex ${positioning} ${props.className}`}>
       {date}
     </div>
   )

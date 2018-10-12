@@ -1,7 +1,8 @@
 from ..common.createMessage import createMsg
 
+
 def saveDraft(Mailbox, emailObj={}, folder='Drafts'):
-	#try:
+	try:
 		Mailbox.select_folder(folder, readonly=False)
 		draftID = str(emailObj['MessageID']) if 'MessageID' in emailObj else ''
 		drafts = Mailbox.search(['TEXT', draftID])
@@ -16,6 +17,6 @@ def saveDraft(Mailbox, emailObj={}, folder='Drafts'):
 		print( Mailbox.append(folder, msg.as_string(), b'\\Seen') )
 		Mailbox.unselect_folder()
 		return True
-	#except:
-	#	print('Cant save draft')
-	#	return False
+	except:
+		print('saveDraft() Error: Cant save draft')
+		return False

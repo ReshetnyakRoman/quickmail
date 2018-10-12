@@ -25,7 +25,7 @@ export default async function getEmailList(component, folder=undefined, stepsBac
 
       const fetchFunction = silent ? fetch : fetchWithWarningMessage
 
-      await fetchFunction(url, config, warningMessage, timeout, component)
+      await fetchFunction(url, config, timeout, warningMessage, component)
       .then(res => res.json())
       .then(res => {console.log(`${res.folder}'s emails list successfully received`) 
         return res
@@ -39,9 +39,12 @@ export default async function getEmailList(component, folder=undefined, stepsBac
           const fullUIDlist =  res.UIDs
           for (let email of prevState.emailList[folderName].emails ) {
              //check that email not in Mailbox already and emails still exist in this folder
-            if( !(newUIDlist.includes(email.emailId)) && fullUIDlist.includes(email.emailId) ){
+            //if( !(newUIDlist.includes(email.emailId)) && fullUIDlist.includes(email.emailId) ){
+            //  cleanedEmailList.push(email)
+            //} 
+            if( !(newUIDlist.indexOf(email.emailId) !== -1) && fullUIDlist.indexOf(email.emailId) !== -1 ){
               cleanedEmailList.push(email)
-            }      
+            }     
             
           }
 
@@ -60,8 +63,21 @@ export default async function getEmailList(component, folder=undefined, stepsBac
           console.log(res.message)
         }
       })
-      .catch(err => console.log(err))
-    
+      .catch(err => {
+        component.setState({
+          modal:{
+            header:'Error', 
+            body:`Ops, cant get emails in  ${folder}`, 
+            footer:'', 
+            closeButtonText:'OK', 
+            isVisible: !silent
+          },
+          isLoading:false
+        })
+        console.log(err)
+      })
+
     } 
+
     return true
   }

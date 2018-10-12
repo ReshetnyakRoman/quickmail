@@ -4,7 +4,8 @@ def moveToFolder(Mailbox, fromFolder, toFolder, uid):
 		Mailbox.move(messages=[uid],folder=toFolder)
 		messages = Mailbox.search()
 		Mailbox.unselect_folder()
-		print('Email %s moved to %s' % (uid, toFolder))
+		print('\nEmail %s moved to %s \n' % (uid, toFolder))
 		return True
 	except:
+		print('moveToFolder() Error: Cant move to other folder')
 		return False

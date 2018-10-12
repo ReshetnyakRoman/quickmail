@@ -43,17 +43,9 @@ class search(Resource):
   @jwt_required
   @marshal_with(resource_fields)
   def get(self):
-    #Помнять строчки логина и пароля после тестирования
     try:
-      MAIL_USERNAME = 'registration'
-      MAIL_PASSWORD = 'Registration_2001'
-            
-      userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()     
-      #MAIL_USERNAME = userInfo.osUserName
-      #MAIL_PASSWORD = userInfo.password
-      
-      if request.headers.get('ID') == get_jwt_identity():
-        print('User with ID: {0} successfuly pass to perform search'.format(request.headers.get('ID')) )
+      userID = request.headers.get('ID')
+      if userID == get_jwt_identity():
 
         emailList = []
         allEemailsUIDs = []
@@ -61,19 +53,21 @@ class search(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('keyword', help='string we are search in email')
         args = parser.parse_args()
-        print(args['keyword'])
+        print('\nSerching emails with keyword "{}"... '.format(args['keyword']))
 
+        userInfo = Users.query.filter_by(userID=userID).first()     
+        MAIL_USERNAME = userInfo.osUserName
+        MAIL_PASSWORD = userInfo.password
         Mailbox =  makeNewIMAPconnection()
         Mailbox.login(MAIL_USERNAME, MAIL_PASSWORD)
         folders = getSubFolders(Mailbox)
         folders.append(app.config['IMAP_SENT_FOLDER'])
         folders.append('INBOX')
-        print(folders)
         emailsUIDs = searchEmails(MAIL_USERNAME,MAIL_PASSWORD, app.config['IMAP_HOST'],args['keyword'], folders)
 
         for folder, emails in emailsUIDs.items():
           if len(emails):
-            folderEmailList = getDescretEmailList(Mailbox, emails, folder)
+            folderEmailList = getDescretEmailList(Mailbox, emails, folder, userID)
             emailList += folderEmailList
             allEemailsUIDs += emails
 

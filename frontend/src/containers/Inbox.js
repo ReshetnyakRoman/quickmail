@@ -64,7 +64,7 @@ class Inbox extends React.Component{
 	  	connectDropTarget,
 	  	inboxUnreaded
 	  } = this.props
-	  const isActive =  !defaultFolders.includes(currentFolder) ? 'isActive' : ''
+	  const isActive =  !defaultFolders.indexOf(currentFolder) !== -1 ? 'isActive' : ''
 	  
 	  
 	  const InboxFolder = 

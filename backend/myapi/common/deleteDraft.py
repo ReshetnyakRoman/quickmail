@@ -1,6 +1,6 @@
 
 def deleteDraft(Mailbox, draftMessageID, folder='Drafts'):
-	#try:
+	try:
 		Mailbox.select_folder(folder, readonly=False)
 		drafts = Mailbox.search(['TEXT', draftMessageID])
 
@@ -12,6 +12,6 @@ def deleteDraft(Mailbox, draftMessageID, folder='Drafts'):
 
 		Mailbox.unselect_folder()
 		return True
-	#except:
-	#	print('Cant delete draft')
-	#	return False
+	except:
+		print('deleteDraft() Error: Cant delete draft')
+		return False

@@ -29,7 +29,7 @@ export default async function getEmail(uid, component, silent=true) {
 	    }, 
     err => component.setState({contentBoxMessage: "Oops, can't get this email from server.", isLoading: false}))
     .then(()=>console.log(`Email UID ${uid} downloaded`))
-    .finally(() => clearTimeout(getEmailLoadingTimer))
+    .then(() => clearTimeout(getEmailLoadingTimer))
     
     
     

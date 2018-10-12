@@ -1,4 +1,4 @@
-export default function fetchWithWarningMessage ( url, config, warningMessage, timeout,component ) {
+export default function fetchWithWarningMessage ( url, config, timeout, warningMessage, component ) {
       return new Promise( (resolve, reject) => {
           // Set timeout timer
           let timer = setTimeout(
@@ -12,6 +12,6 @@ export default function fetchWithWarningMessage ( url, config, warningMessage, t
           fetch( url, config ).then(
               response => resolve( response ),
               err => reject( err )
-          ).finally( () => clearTimeout(timer) );
+          ).then( () => clearTimeout(timer) );
       })
     }

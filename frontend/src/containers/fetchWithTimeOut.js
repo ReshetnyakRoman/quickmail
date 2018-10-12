@@ -10,6 +10,6 @@ export default function fetchWithTimeOut ( url, config, timeout ) {
           fetch( url, config ).then(
               response => resolve( response ),
               err => reject( err )
-          ).finally( () => clearTimeout(timer) );
+          ).then( () => clearTimeout(timer) );
       })
     }

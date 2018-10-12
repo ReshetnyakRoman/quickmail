@@ -17,7 +17,7 @@ export default function handleEmailObj(obj,type='replyEmailObj',component,) {
           if (obj.attachments.length === 0) isNewFileAdded = false
 
           for (let file of obj.attachments){
-            if(oldAttachListNames.includes(file.name)){
+            if(oldAttachListNames.indexOf(file.name) !== -1){
               continue
             }else{
               oldAttachList.push(file)

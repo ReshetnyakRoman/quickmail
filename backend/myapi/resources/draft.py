@@ -18,19 +18,15 @@ class draft(Resource):
   def put(self):
     #try:
       email = json.loads(request.form['textData'])
-      print(email)
+
       if request.files.getlist('docs'):
         email['attachedFiles'] = request.files.getlist('docs')
-        print(request.files.getlist('docs'))
+        #print(request.files.getlist('docs'))
       
       if request.headers.get('ID') == get_jwt_identity():
-        #Помнять строчки логина и пароля после тестирования
-        MAIL_USERNAME = 'registration'
-        MAIL_PASSWORD = 'Registration_2001'
         userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
-        print(userInfo)
-        #MAIL_USERNAME = userInfo.osUserName
-        #MAIL_PASSWORD = userInfo.password
+        MAIL_USERNAME = userInfo.osUserName
+        MAIL_PASSWORD = userInfo.password
 
         draftFolder = current_app.config['IMAP_DRAFT_FOLDER']
 

@@ -1,4 +1,5 @@
 import email
+import random
 from secrets import token_urlsafe
 import quopri
 from ..common.saveAttachment import saveAttachment
@@ -9,11 +10,18 @@ from datetime import datetime
 import pytz
 from html.parser import HTMLParser
 from flask import current_app as app 
+from ..common.decodeInfo import decode_email_string
+
 
 class MyHTMLParser(HTMLParser):
 	text = ''
 	def handle_data(self, data):
 		self.text = self.text + data + ' '
+
+#def token_urlsafe(len):
+#		return  ''.join(chr([random.randint(48,57), random.randint(65,90), random.randint(97,121)][random.randint(0,2)]) for _ in range(len))
+
+
 
 def decodeEmailBody(content):
 	success = True
@@ -37,12 +45,12 @@ def decodeEmailBody(content):
 		success = False
 	return (success,text)
 
-def createEmailObj(msg,uid,isUnreaded=True):
+def createEmailObj(msg,uid, UserID, isUnreaded=True):
 	#print('\n')
 	#print('-------Message {} start-------'.format(uid))
 	#print(msg)
 	#print('-------Message end-------')
-	
+
 	#initalizing
 	token = token_urlsafe(16)
 	attachments = []
@@ -58,14 +66,15 @@ def createEmailObj(msg,uid,isUnreaded=True):
 		date = dateParser.parse(msg['Date'])
 	except:
 		datetime.now(pytz.timezone("Europe/Moscow"))
-
+		
+	subject, encoding = email.header.decode_header(msg['Subject'])[0]
 	try:
-		subject = email.header.decode_header(msg['Subject'])[0][0].decode('utf8', 'replace')
+		if encoding==None:
+			pass
+		else:
+				subject = subject.decode(encoding, 'replace')
 	except:
-		try:
-			subject = email.header.decode_header(msg['Subject'])[0][0]
-		except:
-			subject = ''
+			subject = 'Error during subject encoding'
 	
 	try:
 		To = extractToInfo(msg['To'])
@@ -82,7 +91,7 @@ def createEmailObj(msg,uid,isUnreaded=True):
 	except:
 		MessageID = random.randint(100000, 10000000)  + '@' + app.config['DOMAIN_NAME']
 
-
+ 
 	#parse email body:
 	if(msg.is_multipart()):	
 		#print('Multipart message')
@@ -98,11 +107,11 @@ def createEmailObj(msg,uid,isUnreaded=True):
 
 			if part.get_content_disposition() == 'attachment':
 				try:
-					fileInfo = saveAttachment(part,uid,1234, token)
+					fileInfo = saveAttachment(part,uid, UserID, token)
 					#print('Attched file {} saved at {}, zize: {}B'.format(fileInfo[0], fileInfo[2], fileInfo[3]))
 					attachments.append({'name': fileInfo[0],'path': fileInfo[1], 'url':fileInfo[2], 'size': fileInfo[3], })
 				except:
-					#print('Error: Cant get attachment')
+					print('Error: Cant get attachment')
 					attachments.append({'name':'File corrupted', 'path':'','url':'','size':0})
 	else:
 		#print('Not multipart message')

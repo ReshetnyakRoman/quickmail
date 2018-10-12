@@ -17,13 +17,12 @@ class move(Resource):
   @marshal_with(resource_fields)
   def put(self, folder, uid, newfolder):
     #Помнять строчки логина и пароля после тестирования
-    MAIL_USERNAME = 'registration'
-    MAIL_PASSWORD = 'Registration_2001'
+    #MAIL_USERNAME = 'registration'
+    #MAIL_PASSWORD = 'Registration_2001'
     userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
     
-    print(folder,newfolder)
-    #MAIL_USERNAME = userInfo.osUserName
-    #MAIL_PASSWORD = userInfo.password
+    MAIL_USERNAME = userInfo.osUserName
+    MAIL_PASSWORD = userInfo.password
 
     fromFolderName = defaultFolders[folder] if folder in defaultFolders else folder
     toFolderName = defaultFolders[newfolder] if newfolder in defaultFolders else newfolder

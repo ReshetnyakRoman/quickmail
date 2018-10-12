@@ -17,11 +17,11 @@ function LogIn (props) {
               </span>
 
             </p>
-            <button className='btn-fb' onClick={()=>props.login('FB')} data-scope="public_profile">
+{/*            <button className='btn-fb' onClick={()=>props.login('FB')} data-scope="public_profile">
               Login with
               <img alt='facebook logo' src='./img/facebook-logo.png' />
             </button>
-            <hr className='log-in-hr' />
+            <hr className='log-in-hr' />*/}
 
             <button className='btn-vk' onClick={()=>props.login('VK')}>
               Login with

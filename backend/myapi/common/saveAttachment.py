@@ -8,7 +8,7 @@ def get_subFolders(dir):
     return [name for name in os.listdir(dir)
             if os.path.isdir(os.path.join(dir, name))]
 
-def saveAttachment(part, uid,userID, token=''):
+def saveAttachment(part, uid, userID, token=''):
 	filename = secure_filename( translit(decodeInfo(os.path.basename(part.get_filename())),'ru', reversed=True) )
 	identityPart = str(userID)+'/'+str(uid)+'/'
 	securePart = identityPart + token
@@ -28,6 +28,7 @@ def saveAttachment(part, uid,userID, token=''):
 	url = os.path.join(Config.HTTP_PROTOCOL+'://'+Config.SUB_DOMAIN_NAME+'/attachments/'+securePart, filename)
 
 	if not os.path.isfile(fullAttachmentPath):
+		print('saving attachments for uid {} to {}'.format(uid, fullAttachmentPath) )
 		fp = open(fullAttachmentPath, 'wb')
 		fp.write(part.get_payload(decode=True))
 		fp.close()

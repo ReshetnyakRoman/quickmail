@@ -28,7 +28,7 @@ export default function EmailOut (props) {
     <ScreenTypeContext.Consumer>
       {screnType =>
         
-          <EmailOutStyle>
+          <EmailOutStyle screnType={screnType}>
             <EmailOutHeader screnType={screnType} 
               emailInfo = {props.emailData}
               onSendClick = {(e)=> handleSendClick(e)}

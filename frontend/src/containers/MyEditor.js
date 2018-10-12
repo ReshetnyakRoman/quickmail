@@ -51,8 +51,8 @@ const { AlignmentTool } = alignmentPlugin
 const linkPlugin = createLinkPlugin({placeholder: 'http://…'})
 const linkifyPlugin = createLinkifyPlugin()
 const hashtagPlugin = createHashtagPlugin()
-const emojiPlugin = createEmojiPlugin({ useNativeArt: true})
-const { EmojiSuggestions, EmojiSelect } = emojiPlugin
+const emojiPlugin = createEmojiPlugin({ useNativeArt: true,})
+const { EmojiSuggestions, EmojiSelect, emojiSelectPopover } = emojiPlugin
 const undoPlugin = createUndoPlugin()
 const { UndoButton, RedoButton } = undoPlugin
 
@@ -109,7 +109,7 @@ export default class MyEditor extends Component {
       if (this.props.replyType === 'forward') {
         title = `</br><p><i>----- Forward ----- 
           <br />From: ${this.props.emailInfo.from.email} &nbsp;&nbsp;To: ${this.props.emailInfo.to[0].email} &nbsp;&nbsp;Received: ${this.props.emailInfo.receivingDate.toLocaleString('ru-RU', { year: 'numeric', month: 'short', day: 'numeric' })}</i></br></p>`
-      } else if (this.props.replyType === 'reply') {
+      } else if (this.props.replyType === 'reply' || this.props.replyType === 'replyAll') {
         title = `</br><p><i>----- Reply ----- 
         <br />From: ${this.props.emailInfo.from.email} &nbsp;&nbsp;To: ${this.props.emailInfo.to[0].email} &nbsp;&nbsp;Received: ${this.props.emailInfo.receivingDate.toLocaleString('ru-RU', { year: 'numeric', month: 'short', day: 'numeric' })}</i></br></p>`
       } else {

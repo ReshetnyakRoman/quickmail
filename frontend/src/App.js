@@ -31,11 +31,10 @@ import authorizedHeader from './containers/authorizedHeader'
 import markUnread from './containers/markUnread'
 import {getLastShownUID, getFirstShownUID} from './containers/ShownUIDs'
 
-
-
 class App extends React.Component {
   constructor (props) {
     super(props)
+    this.handleLoginError = this.handleLoginError.bind(this)
     this.handleCreateFolderClick = this.handleCreateFolderClick.bind(this)
     this.handleEmptyTrash = this.handleEmptyTrash.bind(this)
     this.handleMoveEmailToFolder = this.handleMoveEmailToFolder.bind(this)
@@ -57,13 +56,14 @@ class App extends React.Component {
     this.handleDeleteFolder = this.handleDeleteFolder.bind(this)
     this.handleExitClick = this.handleExitClick.bind(this)
     this.savedIndHide = this.savedIndHide.bind(this)
-    this.savedIndShow =  this.savedIndShow.bind(this)
+    this.savedIndShow = this.savedIndShow.bind(this)
     this.notifcationShow = this.notifcationShow.bind(this)
     this.progressBar = this.progressBar.bind(this)
     this.updateLoggedInState =  this.updateLoggedInState.bind(this)
     this.updateCurrentUserData = this.updateCurrentUserData.bind(this)
     this.saveDraftDebounced = debounce(3000, this.saveDraft)
     this.handleSearch = this.handleSearch.bind(this)
+    this.intervalCounter = 0
     this.defaultEmailState = {
         id:'',
         MessageID:'',
@@ -111,8 +111,8 @@ class App extends React.Component {
       emailBatchToUpload:5,
       userFolders:[],
       contentBoxMessage:'',
-      warningTimeout: 60000, //1min
-      mailBoxInfoUpdateInterval: 15000, //20sec
+      warningTimeout: 22000, //22sec
+      mailBoxInfoUpdateInterval: 15000, //15sec
     }
 
   }
@@ -123,13 +123,25 @@ class App extends React.Component {
     
   }
 
+  handleLoginError (message) {
+    this.setState({modal:{
+      header:'Error', 
+      body:message, 
+      footer:'', 
+      closeButtonText:'OK', 
+      isVisible: true}
+
+    })
+  }
+
   updateLoggedInState(status, data=this.state.currentUser) {
     this.setState({isLoggedIn: status, currentUser: data})
-    if (status) {
+
+    if (status == true && this.intervalCounter == 0) {
       this.checkNewEmailDeamon = setInterval(this.updateMailBoxInfo, this.state.mailBoxInfoUpdateInterval)
-    } else {
-      clearInterval(this.checkNewEmailDeamon)
-    }
+      this.intervalCounter += 1
+      console.log(`Set interval ${this.intervalCounter}`)
+    } 
   }
 
   updateCurrentUserData(data) {
@@ -143,6 +155,9 @@ class App extends React.Component {
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.updateWindowDimensions)
+    clearInterval(this.checkNewEmailDeamon)
+    console.log(`Clear interval ${this.intervalCounter}`)
+    this.intervalCounter -= 1
   }
 
   handleInboxToogle (status) {
@@ -159,7 +174,12 @@ class App extends React.Component {
       console.log('Mailbox updated data received')
       return res
     })
-    .then(res => findDifference(res.folders, this))
+    .then(res => {if(this.state.isLoggedIn){
+      return findDifference(res.folders, this)
+    } else {
+        return []
+      } 
+    })
     .then(updatedFolders =>{
       for (let folder of updatedFolders) {
         getEmailList(this, folder.folder,folder.stepsBack, true)
@@ -622,24 +642,55 @@ class App extends React.Component {
   }
 
   progressBar(isVisible = true, progressPercent = ''){
-    this.setState({progressBarStatus:{isVisible:isVisible, progress:progressPercent }})
+    this.setState({progressBarStatus: {isVisible: isVisible, progress: progressPercent }},()=>{
+      if(isVisible){setTimeout(() => this.progressBar(false), 120000)}
+    })
   }
 
   handleExitClick() {
-    this.setState({isLoggedIn: false})
-
+    clearInterval(this.checkNewEmailDeamon)
+    console.log(`Clear interval ${this.intervalCounter}`)
+    this.intervalCounter -= 1
+    
+    this.setState({
+      isLoggedIn: false,
+      isLoading: false,
+      emailList: {
+        'Inbox': {emails:[], default: true, unreaded:0, UIDs:[]},
+        'Draft': {emails:[], default: true, unreaded:0, UIDs:[]},
+        'Sent': {emails:[], default: true, unreaded:0, UIDs:[]},
+        'Trash': {emails:[], default: true, unreaded:0, UIDs:[]},
+        'Search': {emails:[], default: true, unreaded:0, UIDs:[]},
+      },
+      currentFolder: 'Inbox',
+      ContentBoxStatus: 'EmailList',
+      OpenEmailInId: '',
+      OpenEmailInData: '',
+      replyEmailStatus: 'none',
+      replyEmailObj: this.defaultEmailState,
+      newEmailStatus: 'closed',
+      newEmailObj: this.defaultEmailState,
+      modal: this.defaultModalState,
+      userFolders:[],
+    })
+    
     const url = new URL(`${serverURL}/logout`)
     const config = {method: 'GET', headers: authorizedHeader(this)}
 
     fetchWithTimeOut(url, config, 10000)
     .then(res => res.json())
-    .then(res => console.log(res.message), err => console.log(err))   
+    .then(res => console.log(res.message), err => console.log(err))
+    .then(() => {
+      this.setState({
+        currentUser: {email:'unknown', name:'unknown', ID:'', loginType:'', accessToken:'' }
+        }
+    )} )  
   }
 
 
   render () {
     const blur = this.state.isLoading ? 'my-blur' : ''
-    const loder = this.state.isLoading ? <Loader isLoading={this.state.isLoading} /> : null
+    const loder = this.state.isLoading ? <Loader/> : null
     
     
     const notification = this.state.notification.isVisible
@@ -663,9 +714,12 @@ class App extends React.Component {
     const mainLoader = this.state.isAppLoaded
       ? null
       : <MainLoader screnType={this.state.screnType} 
+        onLoginError = {this.handleLoginError}
         handleLoggedInState={this.updateLoggedInState}
         handleCurrentUserData = {this.updateCurrentUserData}
         handleFoldersInfo = {this.updateFoldersInfo}
+        isShowLoading = {(status) => {if(status && this.state.isAppLoaded) this.setState({isLoading: status})
+        } }
         onLoadingComplete = {(status) => this.setState({isAppLoaded:status}) }/>
     
     const folder = this.state.currentFolder in this.state.emailList ? this.state.currentFolder : 'Inbox'
@@ -688,6 +742,7 @@ class App extends React.Component {
         
     const ContentBox = this.state.ContentBoxStatus === 'EmailList' 
       ? <EmailList
+        UIDsList = {this.state.emailList[folder].UIDs}
         emailBatchToUpload = {this.state.emailBatchToUpload}
         currentFolder = {this.state.currentFolder}
         contentBoxMessage = {this.state.contentBoxMessage}
@@ -750,7 +805,6 @@ class App extends React.Component {
             onNewEmailClick = {this.handleNewEmail}
             onAddFolderClick = {this.handleAddFolderClick}
             onInboxCollapseClick = {this.handleInboxToogle}
-            //this.updateLoggedInState
             onExitClick = {this.handleExitClick } />
           <div className='content'>
           <TopBar 
@@ -770,11 +824,13 @@ class App extends React.Component {
           </div>
         </div>
       : <LogIn 
+        onLoginError = {this.handleLoginError}
         screnType={this.state.screnType} 
         handleLoggedInState = {this.updateLoggedInState} 
         handleCurrentUserData = {this.updateCurrentUserData}
         handleFoldersInfo = {this.updateFoldersInfo}
-        onLoadingComplete={(status) => this.setState({isAppLoaded: status}) } />
+        isShowLoading = {(status) => this.setState({isLoading: status})}
+        onLoadingComplete = {(status) => this.setState({isAppLoaded:status}) } />
     }
     
 

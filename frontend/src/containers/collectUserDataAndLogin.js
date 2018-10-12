@@ -1,8 +1,10 @@
 import serverURL from '../config'
+import fetchWithTimeOut from '../containers/fetchWithTimeOut'
 
 async function collectUserDataAndLogin(response, loginType, accessToken, app){
   if (response && !response.error) {
-    app.props.onLoadingComplete(false)
+    app.props.isShowLoading(true)
+
     console.log(`Recieved user-data from ${loginType}`)
     
     var userData = {
@@ -15,15 +17,16 @@ async function collectUserDataAndLogin(response, loginType, accessToken, app){
       UIDs:[]
       } 
     //console.log(JSON.stringify(userData))
+
     var foldersWithInfo
-    fetch(`${serverURL}/auth`,{
+    fetchWithTimeOut(`${serverURL}/auth`,{
           method: 'POST',
           headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(userData),
-        })
+        }, 10000)
     .then(res=>res.json())
     .then(console.log('Recieved user-data from QM-server'))
     .then(res=>{
@@ -37,7 +40,7 @@ async function collectUserDataAndLogin(response, loginType, accessToken, app){
       if(!res.success){
         userData = {email:'unknown', name:'unknown', ID:'', loginType:'', accessToken:''}
         isLogin = false
-        alert(res)
+        app.props.onLoginError(`Oops, error during user registration :-(`)
       }
       
       app.props.handleFoldersInfo(foldersWithInfo)
@@ -45,10 +48,16 @@ async function collectUserDataAndLogin(response, loginType, accessToken, app){
       app.props.handleLoggedInState(isLogin)
       app.props.onLoadingComplete(true)
     })
-    .catch(err => console.log(err))
+    .catch(err=>{
+      console.log(err)
+      app.props.isShowLoading(false)
+      app.props.onLoginError('Oops, cant connect to server, please try later :-(')
+      app.props.handleLoggedInState(false)
+    })
      
     } else {
-        alert('Problem with server connection')
+        app.props.isShowLoading(false)
+        app.props.onLoginError(`Oops, cant connect ${loginType} Server :-(`)
         console.log(response.error)
       }
 }

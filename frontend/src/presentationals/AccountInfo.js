@@ -5,17 +5,15 @@ export default function AccountInfo (props) {
   function logout () {
     if(props.user.loginType === 'FB'){
       window.FB.logout((response)=>{
-        props.onExitClick(false, {email:'', name:'', fbId:'', pic:'' })
+        props.onExitClick(false)
         console.log('Logged out from Facebook and QuickMail')
       })
     } else {
       window.VK.Auth.logout((response)=>{
-        props.onExitClick(false, {email:'', name:'', fbId:'', pic:'' })
+        props.onExitClick(false)
         console.log('Logged out from VK and QuickMail')
       })
     }
-    //console.log('Logged out from QuickMail')
-    //this.props.onExitClick(false, {email:'', name:'', fbId:'', pic:'' })
   }    
 
     return (

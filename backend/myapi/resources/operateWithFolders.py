@@ -18,19 +18,11 @@ class operateWithFolders(Resource):
   @jwt_required
   @marshal_with(resource_fields)
   def post(self, folder):
-    #Помнять строчки логина и пароля после тестирования
-    MAIL_USERNAME = 'registration'
-    MAIL_PASSWORD = 'Registration_2001'
-    userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
-    
-    print(userInfo)
-    #MAIL_USERNAME = userInfo.osUserName
-    #MAIL_PASSWORD = userInfo.password
+    userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()    
+    MAIL_USERNAME = userInfo.osUserName
+    MAIL_PASSWORD = userInfo.password
     
     if request.headers.get('ID') == get_jwt_identity():
-      print('User with ID: {0} pass authentification to create folder {1}'.format(
-        request.headers.get('ID'), folder) )
-
       Mailbox =  makeNewIMAPconnection()
       Mailbox.login(MAIL_USERNAME, MAIL_PASSWORD)
       #we encode it to utf7, couse imap badly operate with non-ascii characters
@@ -56,26 +48,19 @@ class operateWithFolders(Resource):
   @jwt_required
   @marshal_with(resource_fields)
   def delete(self, folder):
-    #Помнять строчки логина и пароля после тестирования
-    MAIL_USERNAME = 'registration'
-    MAIL_PASSWORD = 'Registration_2001'
-    userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
-    
-    print(userInfo)
-    #MAIL_USERNAME = userInfo.osUserName
-    #MAIL_PASSWORD = userInfo.password
+
+
     
     if request.headers.get('ID') == get_jwt_identity():
-      print('User with ID: {0} pass authentification to delte folder {1}'.format(
-        request.headers.get('ID'), folder) )
-
+      userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
+      MAIL_USERNAME = userInfo.osUserName
+      MAIL_PASSWORD = userInfo.password
+      
       Mailbox =  makeNewIMAPconnection()
       Mailbox.login(MAIL_USERNAME, MAIL_PASSWORD)
-      #we encode it to utf7, couse imap badly operate with non-ascii characters
-      #folder = folder.encode('utf7')
       status = deleteFolder(Mailbox, folder)
-      
       Mailbox.logout()
+
       if status:
         responseBody = {'success':True, 'message':'OK'}
         return  responseBody, 200, {'Content-Type':'application/json'}

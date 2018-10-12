@@ -14,27 +14,20 @@ class send(Resource):
   @jwt_required
   @marshal_with(resource_fields)
   def post(self):
+    print('\nStart sending email...')
     try:
       email = json.loads(request.form['textData'])
-      print(email)
+      #print(email)
       if request.files.getlist('docs'):
         email['attachedFiles'] = request.files.getlist('docs')
         print(request.files.getlist('docs'))
       
       if request.headers.get('ID') == get_jwt_identity():
-        #Помнять строчки логина и пароля после тестирования
-        MAIL_USERNAME = 'registration'
-        MAIL_PASSWORD = 'Registration_2001'
         userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
-        print(userInfo)
-        #MAIL_USERNAME = userInfo.osUserName
-        #MAIL_PASSWORD = userInfo.password
+        MAIL_USERNAME = userInfo.osUserName
+        MAIL_PASSWORD = userInfo.password
 
         send_email(email, MAIL_USERNAME, MAIL_PASSWORD) 
-
-        print('------------------------------------\n')
-        print(email['to'][0]['email'])
-        print('------------------------------------\n')
 
         return {'success':True, 'message':'Message sent'}, 200, {'Content-Type':'application/json'}
       else:

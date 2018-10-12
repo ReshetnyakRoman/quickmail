@@ -9,7 +9,6 @@ from config import defaultFoldersReversed as defaultFoldersNames
 
 folder_info = {
   'folder':fields.String(default=''), 
-  #'lastUID':fields.Integer,
   'unreaded':fields.Integer,
   'UIDs': fields.List( fields.Integer, default=[] )
 }
@@ -25,19 +24,12 @@ class updateMailBoxData(Resource):
   @jwt_required
   @marshal_with(resource_fields)
   def get(self):
-    #Помнять строчки логина и пароля после тестирования
-    print('Start getting last emails UIDs')
-    MAIL_USERNAME = 'registration'
-    MAIL_PASSWORD = 'Registration_2001'
 
-    userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
-    #MAIL_USERNAME = userInfo.osUserName
-    #MAIL_PASSWORD = userInfo.password
-    
-  
     if request.headers.get('ID') == get_jwt_identity():
-      print('User with ID: {0} authetificated to get last UIDs'.format(request.headers.get('ID')) )
-      
+
+      userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
+      MAIL_USERNAME = userInfo.osUserName
+      MAIL_PASSWORD = userInfo.password      
       Mailbox =  makeNewIMAPconnection()
       Mailbox.login(MAIL_USERNAME, MAIL_PASSWORD)
       foldersNames = getFolders(Mailbox)
@@ -47,13 +39,12 @@ class updateMailBoxData(Resource):
         folderInfo = getFolderInfo(Mailbox,folder)
         foldersWithInfo.append({
             'folder': defaultFoldersNames[folder] if folder in defaultFoldersNames else folder,
-            #'lastUID': folderInfo[0],
             'unreaded': folderInfo[1],
             'UIDs':folderInfo[2]
           })
 
       Mailbox.logout()
-
+      print('\nData for update {} mailbox successfully collected.\n'.format(MAIL_USERNAME))
       responseBody = {'success':True, 'message':'OK','folders':foldersWithInfo}
       return  responseBody, 200, {'Content-Type':'application/json'}
     else:

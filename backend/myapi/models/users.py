@@ -21,9 +21,8 @@ class Users(db.Model):
 
 	def register(user):
 		isUserRegistred = Users.query.filter_by(userID=user['userID']).first()
-		print(isUserRegistred)
 		if isUserRegistred is not None:
-			print('User %s already register' % user['name'])
+			print('User %s already register in Database' % user['name'])
 			return False
 		else:
 			newUser = Users(
@@ -40,7 +39,7 @@ class Users(db.Model):
 			db.session.add(newUser)
 			db.session.commit()
 			
-		return print('User %s registered' % user['name'])
+		return print('User %s registered in Database' % user['name'])
 
 	def isRegistred(id):
 		if Users.query.filter_by(userID=id).first() is not None:

@@ -17,27 +17,18 @@ class deleteEmail(Resource):
   @jwt_required
   @marshal_with(resource_fields)
   def delete(self, uid=None):
-    #Помнять строчки логина и пароля после тестирования
-    MAIL_USERNAME = 'registration'
-    MAIL_PASSWORD = 'Registration_2001'
-    userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
-    
-    print(userInfo)
-    #MAIL_USERNAME = userInfo.osUserName
-    #MAIL_PASSWORD = userInfo.password
 
-    trashFolder = current_app.config['IMAP_TRASH_FOLDER'] 
-    
     if request.headers.get('ID') == get_jwt_identity():
-      print('User with ID: {0} pass authentification delte email UID {1}'.format(
-        request.headers.get('ID'), uid) )
-
+      
+      userInfo = Users.query.filter_by(userID=request.headers.get('ID')).first()
+      MAIL_USERNAME = userInfo.osUserName
+      MAIL_PASSWORD = userInfo.password
       Mailbox =  makeNewIMAPconnection()
       Mailbox.login(MAIL_USERNAME, MAIL_PASSWORD)
-
+      trashFolder = current_app.config['IMAP_TRASH_FOLDER'] 
       status = deleteMails(Mailbox, uid, trashFolder)
-      
       Mailbox.logout()
+
       if status:
         responseBody = {'success':True, 'message':'OK'}
         return  responseBody, 200, {'Content-Type':'application/json'}

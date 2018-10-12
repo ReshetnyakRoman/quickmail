@@ -32,8 +32,11 @@ export default class EmailList extends React.Component {
     if (this.props.currentFolder !== prevProps.currentFolder 
         //&& this.props.emailList.length === 0
         && this.props.emailList.length < this.props.emailBatchToUpload
-        && this.props.lastShownEmailUID > this.props.lastFolderUID 
-        && this.props.firstShownEmailUID !== 0)
+        
+        //&& this.props.firstShownEmailUID !== 0
+        && this.props.emailList.length < this.props.UIDsList.length
+
+        )
     {
       this.props.handleLoader(true)
       this.props.onEmailListChange(this.props.currentFolder)

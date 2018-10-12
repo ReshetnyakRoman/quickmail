@@ -16,5 +16,5 @@ async function handleLoginResponse(response,social, accessToken,app) {
     app.props.handleLoggedInState(false, {email:'', name:'', ID:'', pic:'', loginType:''} )
   }
 }
-
+ 
 export default handleLoginResponse 

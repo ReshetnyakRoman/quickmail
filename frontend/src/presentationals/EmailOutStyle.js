@@ -27,10 +27,11 @@ export default class EmailOutStyle extends React.Component {
     const defStyles = [{
       key: 'EmailOut',
       style: {
-        positionY: spring(600, animConfig),
+        positionY: this.props.screnType !== 'desktop' ? spring(0, animConfig) : spring(600, animConfig),
         opacity: spring(1)
       }
     }]
+
 
     return (
       <TransitionMotion

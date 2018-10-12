@@ -11,7 +11,7 @@ export default function TopBar(props) {
 	}
 	const searchButton = props.isSearchVisible
     ? <span  
-        className='btn my-btn-primay-bordered search-btn' 
+        className='btn my-btn-primay-bordered search-btn shorten-text' 
         onClick={(e) => handleSearch()}
         alt='search'>
         search

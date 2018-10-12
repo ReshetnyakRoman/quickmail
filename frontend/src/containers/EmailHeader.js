@@ -48,7 +48,8 @@ class EmailHeader extends React.Component {
             folder={this.props.currentFolder} 
             emailId={this.props.emailInfo.emailId}/>
 
-          <i onClick={this.handleCloseClick}
+          <i onClick = {this.handleCloseClick}
+            onTouchEnd = {this.handleCloseClick}
             className='material-icons my-cursor-pointer  my-line-align-down my-icon'
             style={{height: '24px'}}>
           close

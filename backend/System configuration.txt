@@ -3,15 +3,27 @@
 
 $ sudo groupadd quickmail
 $ sudo useradd -s /bin/false -d /home/quickmail/ quickmail -g quickmail
-когда нужен логин под пользователем
-$ sudo su - quickmail -s /bin/bash
+$ sudo passwd nginx
+пароль: MailApplication2018!
+наделяем пользователя sudo привелегиями
+$ sudo usermod -aG wheel nginx
+заходим под quickmail чтобы ввести парль на sudo
+$ sudo su - nginx -s /bin/bash
+$ sudo ls -la
+вводим пароль.
+
+$ sudo yum -y install python36-devel
+$ sudo yum -y install python36
+$ sudo yum -y install python36-virtualenv
+
+
+(удаление пользователя из группы $ gpasswd -d user group)
 
 добавляем меня в группу quickmail, что бы иметь возможность заливать файлы в папку приложения
 Добавляем группу nginx во владельцы папкой, и даем ей прова на чтение и исполнение
 $ sudo chown -cR quickmail:nginx /home/quickmail
-$ sudo chmod -R 0775 /home/quickmail
+не спешим делатт это $ sudo chmod -R 0775 /home/quickmail
 $ sudo usermod -a -G quickmail roman
-
 
 создани пользователя testuser2 одной командой
 $ sudo useradd  -G {usergroup} -d /home/{username} -s /bin/false -p $(echo {userpassword} | openssl passwd -1 -stdin) {username}
@@ -23,23 +35,43 @@ $ sudo userdel -r testuser
 sudo vim /etc/nginx/sites-available/quickmail.conf
 
 ===================quickmail.conf=================
-upstream uwsgi_flask_upstream {
-	server unix:/home/quickmail/flask-uwsgi.sock;
+upstream uwsgi_flask_quickmail_upstream {
+        server unix:/home/quickmail/backend/qm-uwsgi.sock;
 }
 
 server {
-	listen 80;
-	server_tokens off;
-	server_name mail.stepanich.ru;
-  
+        listen 80;
+        server_tokens off;
+        server_name mail.stepanich.ru;
+
+  location /api/ {
+        include uwsgi_params;
+        uwsgi_pass uwsgi_flask_quickmail_upstream;
+  }
+
   location / {
-  		root /home/quickmail/test
-  		index  index.html index.htm;
-       #include uwsgi_params;
-       #uwsgi_pass uwsgi_flask_upstream;
+        root /home/quickmail/frontend/build;
+        index  index.html index.htm;
    }
 
-}
+  location /static {
+        root /home/quickmail/frontend/build;
+        autoindex on;
+  }
+
+  location /img {
+        root /home/quickmail/frontend/build;
+        autoindex on;
+  }
+
+  location /attachments/ {
+        root /home/quickmail/;
+        autoindex on;
+   }
+
+  # access-log можно отключить для снижения загруженности сервера.
+  access_log on;
+  access_log  /home/quickmail/nginx-access.log;
 
 ==================================================
 
@@ -49,3 +81,155 @@ $ sudo ln -s /etc/nginx/sites-available/quickmail.conf /etc/nginx/sites-enabled/
 $ sudo nginx -t
 запускаем 
 $ sudo nginx -s reload
+
+$ cd /home/quickmail/
+
+-------------------------------------------------------
+когда нужно запускать wugsi для отладки с логами в stdout, делаем это из под пользователя nginx 
+$ sudo su - nginx -s /bin/bash
+$ cd /home/quickmail/backend/
+$ source venv/bin/activate
+$ uwsgi --ini uwsgi.ini
+$ MailApplication2018!
+$ sudo userdel -r roman.reshetnjak
+$ mysql -u root -p
+msql> use quickmail;
+msql> delete from users where userID = 1424014;
+------- ------------------------------------------------
+разрешамем nginx добавлять пользователя без запроса паролья
+$ sudo visudo
+добавляем 2 строчки:
+#под пользователем root.....
+nginx ALL=(ALL) NOPASSWD:/usr/sbin/adduser
+
+#под группой %wheel......
+%nginx ALL=(ALL) NOPASSWD:/usr/sbin/adduser
+
+для информации, не нужно:
+#меняем строчку 'Defaults    env_reset' на
+Defaults    env_reset,timestamp_timeout=-1
+
+
+
+
+логинимся под quickmail
+$ sudo su - quickmail -s /bin/bash
+
+клонируем репозиторий
+git clone https://github.com/ReshetnyakRoman/quickmail
+$ mkdir attachments
+$ mv quickmail/* ~
+$ rm -fr quickmail/
+$ cd backend/
+$ virtualenv-3 -p python3.6 venv
+$ exit
+в каталоге /home/quickmail/backend
+
+в конфиг файле прописыаем явки и пароли для почты и mysql
+$ vim config.py
+    JWT_SECRET_KEY = 'OtE-Yhg37YGiOj49QMVFKwvI3GtJ-H5J5Qe1mbKhSO862Uo562Z8ovz9TV9JeOs-ePXr7dnnMDpTRTKdst7ExHORhKskYvFAboH2vRNdXnq5F-f_JDY2aJRpbS57WN05VURtJI0Af7cIo1btk7wjei1JQrrscnn-xAI9Ua_2opU'
+    BUNDLE_ERRORS = True
+    ADMIN_PASSWORD = 'MailApplication2018!'
+    MAIL_SERVER = '104.238.111.93'
+    MAIL_PORT = 25  
+    IMAP_HOST = '104.238.111.93'
+    FB_APP_ID = 1944357025611194
+    FB_SECRET = '28809a4e170a7fb9f5a6f3f7e21fdd65'
+    FB_CLIENT_TOKEN = '79bbb883522894421627b3280dc1fa2e'
+    VK_APP_ID = 6669338
+    VK_SECRET = '1TywXSFFaLKr2XtY7whl'
+    VK_SERVICE_TOKEN = 'e7a80428e7a80428e7a80428c7e7cdc032ee7a8e7a80428bcd537c09fc9fa9756962c30'
+    SQLALCHEMY_DATABASE_URI = 'mysql://quickmail:toStrong1!psw@localhost/quickmail?charset=utf8'
+    ATTACHMENT_SAVE_PATH = '/home/quickmail/attachments'
+
+$ sudo yum update
+вариант: $ python3.4-m venv venv
+$ virtualenv-3 -p python3.6 /home/quickmail/backend/venv
+$ pip install --upgrade setuptools
+$ source venv/bin/activate
+
+устанавливаем зависимости
+$ pip install -r requirements.txt
+
+$ mkdir attachments
+$ sudo chown -cR quickmail:nginx /home/quickmail
+
+создаем файл $ vim /home/quickmail/backend/uwsgi.ini
+
+    [uwsgi]
+    # Имя модуля и приложения, которое запустит uWSGI
+    wsgi-file = /home/quickmail/backend/start.py
+    callable = app
+    py-autoreload = 1
+
+    # Поуть до виртуального окружения
+    virtualenv = /home/quickmail/backend/venv
+
+
+    master = true
+    # Количество процессов uWSGI
+    processes = 3
+
+    # Указываем где создавать файл-сокет
+    socket = /home/quickmail/backend/qm-uwsgi.sock
+
+    # Указываем пользователя и группу под которыми выполнять приложение
+    uid = nginx
+    gid = nginx
+
+    # Удаляем временные файлы uWSGI при выключении
+    vacuum = true
+
+    # При закрытии терминала - завершать работу
+    # Необходимо для корректного запуска с помощью systemd
+    die-on-term = true
+
+    # Логи пишем в
+    #logto = /home/quickmail/backend/error.log
+
+
+Если все работает то осталось создать службу для запуска демона нашего uwsgi сервера
+идем в папку /etc/systemd/system
+$ cd /etc/systemd/system
+$ sudo touch qm-uwsgi.service
+$ sudo vim qm-uwsgi.service
+    [Unit]
+    Description=uWSGI instance to serve quickmail flask-uwsgi project
+    After=network.target
+
+    [Service]
+    User=nginx
+    Group=nginx
+    WorkingDirectory=/home/quickmail/backend
+    Environment="PATH=/home/quickmail/backend/venv/bin"
+    ExecStart=/home/quickmail/backend/venv/bin/uwsgi --ini uwsgi.ini
+
+    [Install]
+    WantedBy=multi-user.target
+
+Запускаем сервис $ sudo systemctl start qm-uwsgi
+Проверка статуса $ sudo systemctl status qm-uwsgi
+Разрешаем службе запускатся при загрузке $ sudo systemctl enable qm-uwsgi
+Логи uwsgi можно смотреть тут:  $ sudo journalctl -u qm-uwsgi.service
+или тут: $ sudo tail /var/log/messages
+
+логинимся с mysql:
+$ mysql -u root -p
+создаем пользователя для нашего приложения.
+
+Создаем базу данных quickmail
+mysql> CREATE DATABASE quickmail CHARACTER SET utf8 COLLATE utf8_general_ci;
+mysql>  GRANT ALL PRIVILEGES ON quickmail.* TO 'quickmail'@'localhost' IDENTIFIED BY 'toStrong1!psw';
+mysql>  exit
+
+создаем базу данных:
+(venv)$ python start.py shell
+>>> db.create_all()
+>>> exit()
+
+ДЕЛАЕМ СБОРКУ РЕАКТ ЧАСТИ
+В папке для разработки  ~/Documents/QuickMail/frontend пишем
+$ npm run build
+дальше заливаем папку ~/Documents/QuickMail/frontend/build на сервер через SublimeText 
+Или если проект склонирован с гитхаба, то все должно работать и так.
+
