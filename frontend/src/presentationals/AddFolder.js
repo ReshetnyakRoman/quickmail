@@ -9,7 +9,7 @@ export default function AddFolder (props) {
 
 
   function handleCreateClick () {
-    var folderName = encodeURI(textInput.current.value.replace(/[^0-9a-zA-ZА-Яа-я_\+\- ]/gi, ''))
+    var folderName = encodeURI(textInput.current.value.replace(/[^0-9a-zA-ZА-Яа-я_+\- ]/gi, ''))
 
     if(folderName) props.onCreateFolderClick(folderName)
     

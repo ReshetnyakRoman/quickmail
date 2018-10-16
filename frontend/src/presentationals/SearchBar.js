@@ -1,8 +1,6 @@
 import React from 'react'
-import {Motion, spring, TransitionMotion} from 'react-motion'
-import config from '../presentationals/AnimationConfig'
+import {Motion, spring} from 'react-motion'
 
-const animConfig = config.searchConfig
 
 export default class SearchBar extends React.Component {
   constructor (props) {

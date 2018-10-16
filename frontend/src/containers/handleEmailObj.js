@@ -2,9 +2,10 @@ export default function handleEmailObj(obj,type='replyEmailObj',component,) {
     const emailType = type === 'replyEmailObj' ? 'ReplyEmail' : 'NewEmail'
     const prevSubject = component.state[type].subject
     const prevBody = component.state[type].body
+    
     component.setState(
       function(prevState){
-        if (obj.attachments != undefined) {
+        if (obj.attachments !== undefined) {
           var oldAttachListNames = []
           var oldAttachList = []
           for (let file of prevState[type].attachments) {
@@ -29,7 +30,7 @@ export default function handleEmailObj(obj,type='replyEmailObj',component,) {
           }
           
         }
-        if(obj.delete != undefined) {
+        if(obj.delete !== undefined) {
           let attachments = prevState[type].attachments.slice()
           for (let i in attachments){
             if (attachments[i].name = obj.delete ){

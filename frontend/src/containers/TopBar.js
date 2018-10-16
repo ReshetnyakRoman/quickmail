@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../presentationals/Logo'
+//import Logo from '../presentationals/Logo'
 import CurrentFolder from '../presentationals/CurrentFolder'
 import SearchBar from '../presentationals/SearchBar'
 import EmptyTrashButton from '../presentationals/EmptyTrashButton'

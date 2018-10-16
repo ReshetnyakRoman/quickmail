@@ -1,28 +1,20 @@
 import React, { Component } from 'react'
-import Editor, { composeDecorators } from 'draft-js-plugins-editor'
-import { EditorState, ContentState, convertFromHTML, convertFromRaw } from 'draft-js'
+import Editor from 'draft-js-plugins-editor'
+import { EditorState, ContentState, convertFromHTML } from 'draft-js'
 import createHashtagPlugin from 'draft-js-hashtag-plugin'
-import createLinkifyPlugin from 'draft-js-linkify-plugin'
-import createImagePlugin from 'draft-js-image-plugin'
 import createEmojiPlugin from 'draft-js-emoji-plugin'
 import createToolbarPlugin, { Separator }  from 'draft-js-static-toolbar-plugin'
-import createUndoPlugin from 'draft-js-undo-plugin'
-import createSideToolbarPlugin  from 'draft-js-side-toolbar-plugin'
-import BlockTypeSelect from 'draft-js-side-toolbar-plugin/lib/components/BlockTypeSelect'
 import createLinkPlugin from 'draft-js-anchor-plugin'
 import createAlignmentPlugin from 'draft-js-alignment-plugin'
 import createFocusPlugin from 'draft-js-focus-plugin'
 import createResizeablePlugin from 'draft-js-resizeable-plugin'
 import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin'
-import DraftPasteProcessor from 'draft-js/lib/DraftPasteProcessor'
 import {stateToHTML} from 'draft-js-export-html'
-import {throttle,debounce} from 'throttle-debounce'
+import {debounce} from 'throttle-debounce'
 
 import 'draft-js-side-toolbar-plugin/lib/plugin.css'
-import 'draft-js-image-plugin/lib/plugin.css'
 import 'draft-js-static-toolbar-plugin/lib/plugin.css'
 import 'draft-js-emoji-plugin/lib/plugin.css'
-import 'draft-js-undo-plugin/lib/plugin.css'
 import 'draft-js-anchor-plugin/lib/plugin.css'
 import 'draft-js-focus-plugin/lib/plugin.css'
 import 'draft-js-alignment-plugin/lib/plugin.css'
@@ -49,20 +41,9 @@ const alignmentPlugin = createAlignmentPlugin()
 const resizeablePlugin = createResizeablePlugin()
 const { AlignmentTool } = alignmentPlugin
 const linkPlugin = createLinkPlugin({placeholder: 'http://…'})
-const linkifyPlugin = createLinkifyPlugin()
 const hashtagPlugin = createHashtagPlugin()
 const emojiPlugin = createEmojiPlugin({ useNativeArt: true,})
 const { EmojiSuggestions, EmojiSelect, emojiSelectPopover } = emojiPlugin
-const undoPlugin = createUndoPlugin()
-const { UndoButton, RedoButton } = undoPlugin
-
-const decorator = composeDecorators(
-  resizeablePlugin.decorator,
-  alignmentPlugin.decorator,
-  focusPlugin.decorator,
-  blockDndPlugin.decorator
-)
-const imagePlugin = createImagePlugin({decorator})
 
 const toolbarPlugin = createToolbarPlugin({
   structure: [
@@ -87,10 +68,8 @@ const { Toolbar } = toolbarPlugin;
 
 const plugins = [
   hashtagPlugin,
-  imagePlugin,
   emojiPlugin,
   toolbarPlugin,
-  undoPlugin,
   linkPlugin,
   alignmentPlugin,
   focusPlugin,

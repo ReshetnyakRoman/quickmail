@@ -1,6 +1,20 @@
 {
-  "main.css": "static/css/main.74502a40.css",
-  "main.css.map": "static/css/main.74502a40.css.map",
-  "main.js": "static/js/main.d0964c29.js",
-  "main.js.map": "static/js/main.d0964c29.js.map"
+  "EmailList.js": "static/js/EmailList.ae1a4e28.chunk.js",
+  "EmailList.js.map": "static/js/EmailList.ae1a4e28.chunk.js.map",
+  "EmailOut.js": "static/js/EmailOut.5e39bbcb.chunk.js",
+  "EmailOut.js.map": "static/js/EmailOut.5e39bbcb.chunk.js.map",
+  "Login.js": "static/js/Login.9b8518bd.chunk.js",
+  "Login.js.map": "static/js/Login.9b8518bd.chunk.js.map",
+  "MainLoader.js": "static/js/MainLoader.134aac35.chunk.js",
+  "MainLoader.js.map": "static/js/MainLoader.134aac35.chunk.js.map",
+  "ReplySection.js": "static/js/ReplySection.344e95e5.chunk.js",
+  "ReplySection.js.map": "static/js/ReplySection.344e95e5.chunk.js.map",
+  "SideBar.js": "static/js/SideBar.5c5bb7ea.chunk.js",
+  "SideBar.js.map": "static/js/SideBar.5c5bb7ea.chunk.js.map",
+  "TopBar.js": "static/js/TopBar.e8306cdb.chunk.js",
+  "TopBar.js.map": "static/js/TopBar.e8306cdb.chunk.js.map",
+  "main.css": "static/css/main.6b003ec9.css",
+  "main.css.map": "static/css/main.6b003ec9.css.map",
+  "main.js": "static/js/main.f6182a47.js",
+  "main.js.map": "static/js/main.f6182a47.js.map"
 }

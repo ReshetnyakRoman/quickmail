@@ -1,13 +1,10 @@
 import React from 'react'
-import {Motion, spring, TransitionMotion} from 'react-motion'
+import {spring, TransitionMotion} from 'react-motion'
 import config from '../presentationals/AnimationConfig'
 
 const animConfig = config.newEmailConfig
 
 export default class EmailOutStyle extends React.Component {
-  constructor (props) {
-    super(props)
-  }
 
   willLeave (styleCell) {
     return {

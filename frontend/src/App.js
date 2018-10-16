@@ -1,25 +1,24 @@
 import React from 'react'
 import ScreenTypeContext from './containers/Context'
-import SideBar from './containers/SideBar'
+//import SideBar from './containers/SideBar'
 import getUserFolders from './containers/getUserFolders'
-import TopBar from './containers/TopBar'
+//import TopBar from './containers/TopBar'
 import EmailIn from './containers/EmailIn'
-import EmailList from './containers/EmailList'
-import EmailOut from './containers/EmailOut'
+//import EmailList from './containers/EmailList'
+//import EmailOut from './containers/EmailOut'
 import NewMailButton from './presentationals/NewMailButton'
-import LogIn from './presentationals/LogIn'
+//import LogIn from './presentationals/LogIn'
 import Notifications from './containers/Notifications'
 import AddFolder from './presentationals/AddFolder'
 import DeleteConfirmation from './presentationals/DeleteConfirmation'
 import ProgressBar from './presentationals/ProgressBar'
 import Loader from './presentationals/Loader'
-import MainLoader from './presentationals/MainLoader'
+//import MainLoader from './presentationals/MainLoader'
 import {ControlsContext} from './containers/Context'
 import Modal from './presentationals/Modal'
 import {debounce} from 'throttle-debounce'
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
-//import EmailItemDragLayer from './presentationals/EmailItemDragLayer'
 import ErrorBoundary from './containers/ErrorBoundary'
 import handleSendEmail from './containers/handleSendEmail'
 import handleEmailObj from './containers/handleEmailObj'
@@ -30,6 +29,8 @@ import getEmailList from './containers/getEmailList'
 import authorizedHeader from './containers/authorizedHeader'
 import markUnread from './containers/markUnread'
 import {getLastShownUID, getFirstShownUID} from './containers/ShownUIDs'
+import Loadable from 'react-loadable'
+import Loading from './containers/CodeSplitLoading'
 
 class App extends React.Component {
   constructor (props) {
@@ -137,7 +138,7 @@ class App extends React.Component {
   updateLoggedInState(status, data=this.state.currentUser) {
     this.setState({isLoggedIn: status, currentUser: data})
 
-    if (status == true && this.intervalCounter == 0) {
+    if (status === true && this.intervalCounter === 0) {
       this.checkNewEmailDeamon = setInterval(this.updateMailBoxInfo, this.state.mailBoxInfoUpdateInterval)
       this.intervalCounter += 1
       console.log(`Set interval ${this.intervalCounter}`)
@@ -713,7 +714,7 @@ class App extends React.Component {
     
     const mainLoader = this.state.isAppLoaded
       ? null
-      : <MainLoader screnType={this.state.screnType} 
+      : <MainLoaderLoadable screnType={this.state.screnType} 
         onLoginError = {this.handleLoginError}
         handleLoggedInState={this.updateLoggedInState}
         handleCurrentUserData = {this.updateCurrentUserData}
@@ -741,7 +742,7 @@ class App extends React.Component {
     }
         
     const ContentBox = this.state.ContentBoxStatus === 'EmailList' 
-      ? <EmailList
+      ? <EmailListLoadable
         UIDsList = {this.state.emailList[folder].UIDs}
         emailBatchToUpload = {this.state.emailBatchToUpload}
         currentFolder = {this.state.currentFolder}
@@ -773,7 +774,7 @@ class App extends React.Component {
         onDeleteDraftClick = {this.handleDeleteDraft}/>
     
     const emailOut = this.state.newEmailStatus === 'open'
-      ? <EmailOut 
+      ? <EmailOutLoadable
         folder = {this.state.currentFolder}
         emailData = {this.state.newEmailObj}
         isSavedIndVisible = {this.state.isSavedIndVisible.NewEmail}
@@ -793,7 +794,7 @@ class App extends React.Component {
     if(this.state.isAppLoaded){
       AppContent = this.state.isLoggedIn 
       ? <div className = {blur}>
-          <SideBar
+          <SideBarLoadable
             inboxUnreaded = {this.state.emailList['Inbox'].unreaded}
             userInfo={this.state.currentUser}
             folder = {this.state.currentFolder}
@@ -807,7 +808,7 @@ class App extends React.Component {
             onInboxCollapseClick = {this.handleInboxToogle}
             onExitClick = {this.handleExitClick } />
           <div className='content'>
-          <TopBar 
+          <TopBarLoadable 
             isSearchVisible = {this.state.isSearchVisible}
             contentBoxStatus = {this.state.ContentBoxStatus}
             folder = {this.state.currentFolder} 
@@ -823,7 +824,7 @@ class App extends React.Component {
           <NewMailButton className='my-hide-desktop' onNewEmailClick = {this.handleNewEmail} />
           </div>
         </div>
-      : <LogIn 
+      : <LogInLoadable 
         onLoginError = {this.handleLoginError}
         screnType={this.state.screnType} 
         handleLoggedInState = {this.updateLoggedInState} 
@@ -858,6 +859,7 @@ class App extends React.Component {
 
 export default DragDropContext(HTML5Backend)(App)
 
+//function to endode non ascii folder names into ascii
 function b64EncodeUnicode(str) {
     // first we use encodeURIComponent to get percent-encoded UTF-8,
     // then we convert the percent encodings into raw bytes which
@@ -867,3 +869,49 @@ function b64EncodeUnicode(str) {
             return String.fromCharCode('0x' + p1);
     }));
 }
+
+//code spliting section
+
+const LogInLoadable = Loadable({
+  loader: () => import(/* webpackChunkName: "Login" */ './presentationals/LogIn'),
+  loading: Loading,
+  dealy: 3000,
+  timeout: 60000
+  })
+
+const SideBarLoadable = Loadable({
+  loader: () => import(/* webpackChunkName: "SideBar" */ './containers/SideBar'),
+  loading: Loading,
+  dealy: 3000,
+  timeout: 60000
+  })
+
+const TopBarLoadable = Loadable({
+  loader: () => import(/* webpackChunkName: "TopBar" */ './containers/TopBar'),
+  loading: Loading,
+  dealy: 3000,
+  timeout: 60000 //1min
+  })
+
+const EmailListLoadable = Loadable({
+  loader: () => import(/* webpackChunkName: "EmailList" */ './containers/EmailList'),
+  loading: Loading,
+  dealy: 3000,
+  timeout: 60000 //1min
+  })
+
+const MainLoaderLoadable = Loadable({
+  loader: () => import(/* webpackChunkName: "MainLoader" */ './presentationals/MainLoader'),
+  loading: ()=>null,
+  dealy: 3000,
+  timeout: 120000 //2min
+  })
+
+
+const EmailOutLoadable = Loadable({
+  loader: () => import(/* webpackChunkName: "EmailOut" */ './containers/EmailOut'),
+  loading: Loading,
+  dealy: 2000,
+  timeout: 60000 //1min
+  })
+

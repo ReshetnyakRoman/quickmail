@@ -29,13 +29,13 @@ class SendToInput extends React.Component {
     const newAddressList = this.props.recipentsList.slice()
 
     //check for toogle between reply and replyToAll buttons to manage 'Copy' field
-    if( JSON.stringify(newAddressList) != JSON.stringify(prevProps.recipentsList)){
+    if( JSON.stringify(newAddressList) !== JSON.stringify(prevProps.recipentsList)){
       this.setState( {addressList: newAddressList } )
       this.props.onInputChange(newAddressList)
     }
 
     //check for toogle between reply and replyToAll buttons to manage 'To' field
-    if ( this.props.toogleChange != prevProps.toogleChange ){
+    if ( this.props.toogleChange !== prevProps.toogleChange ){
       this.setState( {addressList: newAddressList} )
       this.props.onInputChange(newAddressList)
     }
@@ -65,8 +65,8 @@ class SendToInput extends React.Component {
     if (props.key === 'Enter' || props.key === ' ') {
 
       if (this.state.addressList.filter(person => person.email === this.InputValue).length === 0 
-          && this.InputValue != '' 
-          && this.InputValue != undefined) {
+          && this.InputValue !== '' 
+          && this.InputValue !== undefined) {
         
         const newAddressList = this.state.addressList.concat([{email: this.InputValue, name:this.InputValue}])
         
@@ -87,8 +87,8 @@ class SendToInput extends React.Component {
   handleInputBlur() {
     let newAddressList = this.state.addressList
     if (this.state.addressList.filter(person => person.email === this.InputValue).length === 0 
-        && this.InputValue != '' 
-        && this.InputValue != undefined) {
+        && this.InputValue !== '' 
+        && this.InputValue !== undefined) {
 
         const newAddressList = this.state.addressList.concat([{email: this.InputValue, name:this.InputValue}])
         this.setState({
