@@ -1,7 +1,9 @@
 import React from 'react'
-import MyEditor from '../containers/MyEditor'
+//import MyEditor from '../containers/MyEditor'
 import { NativeTypes } from 'react-dnd-html5-backend'
 import { DropTarget } from 'react-dnd'
+import { MyEditorLoadable } from '../App'
+
 
 const fileTarget = {
 	drop(props, monitor){
@@ -26,7 +28,7 @@ class EmailOutBody extends React.Component {
 	  return connectDropTarget(
 	    <div className='email-body'>
 	    	{isOver && <div className='dropZone'>Drop files here</div>}
-	      <MyEditor 
+	      <MyEditorLoadable 
 	      	replyType = {'new'}
           emailInfo = {emailInfo}
 	      	onContentChange={(content)=>this.handleNewEmailObj('body', content) }/>

@@ -4,18 +4,9 @@ import Attachments from '../presentationals/Attachments'
 import EmailBody from '../presentationals/EmailBody'
 import Footer from '../presentationals/Footer'
 import EmailInStyle from '../presentationals/EmailInStyle'
-//import ReplySection from '../containers/ReplySection'
+import ReplySection from '../containers/ReplySection'
 import ScreenTypeContext from '../containers/Context'
 import ErrorBoundary from '../containers/ErrorBoundary'
-import Loadable from 'react-loadable'
-import Loading from '../containers/CodeSplitLoading'
-
-const ReplySectionLoadable = Loadable({
-  loader: () => import(/* webpackChunkName: "ReplySection" */ '../containers/ReplySection'),
-  loading: Loading,
-  dealy: 300,
-  timeout: 60000 //1min
-  })
 
 export default function EmailIn (props) {
 
@@ -42,7 +33,7 @@ export default function EmailIn (props) {
 
   const footer = props.replyEmailStatus === 'none'
       ? () => <Footer onButtonClick={(status,email)=>handleFooterButtonsClick(status,email)} emailInfo={props.emailData}/>
-      : (screnType) => <ReplySectionLoadable
+      : (screnType) => <ReplySection
         emailInfo = {props.emailData}
         screnType = {screnType}
         attachments = {props.attachments}

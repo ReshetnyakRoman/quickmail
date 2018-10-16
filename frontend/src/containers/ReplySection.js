@@ -1,11 +1,14 @@
 import React from 'react'
 import EmailOutTitle from '../containers/EmailOutTitle'
-import MyEditor from '../containers/MyEditor'
+//import MyEditor from '../containers/MyEditor'
 import EmailOutFooter from '../containers/EmailOutFooter'
 import SendToInput from '../containers/SendToInput'
 import AttachedDocs from '../presentationals/AttachedDocs'
 import { NativeTypes } from 'react-dnd-html5-backend'
 import { DropTarget } from 'react-dnd'
+import { MyEditorLoadable } from '../App'
+
+
 
 const fileTarget = {
   drop(props, monitor){
@@ -73,7 +76,7 @@ class ReplySection extends React.Component {
         {connectDropTarget(
           <div style = {{position:'relative'}}>
             {isOver && <div className='dropZone'>Drop files here</div>}
-            <MyEditor 
+            <MyEditorLoadable 
             replyType = {props.replyEmailStatus}
             emailInfo = {props.emailInfo}
             onContentChange = {(content) => this.handleReplyEmailObj('body',content)}
