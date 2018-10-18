@@ -1,0 +1,10 @@
+changes in 
+App.js
+presentationals/Trash.js
+presentationals/UserFolder.js
+presentationals/AccountInfo.js
+presentationals/LogIn.js
+containers/Inbox.js
+containers/Folders.js
+containers/EmailListItem.js
+containers/EmailHeader.js

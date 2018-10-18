@@ -2,6 +2,7 @@ import React from 'react'
 import UserFolder from '../presentationals/UserFolder'
 import { DropTarget, ConnectDropTarget, DropTargetMonitor } from 'react-dnd'
 import Types from '../containers/ItemType'
+import {Link} from 'react-router-dom'
 
 const targetFolder = {
   drop (props,monitor,component){
@@ -36,7 +37,7 @@ function collect (connect,monitor){
 
 class Inbox extends React.Component{	
   handleClick (folder, event) {
-    if(event) {event.preventDefault()}
+    //if(event) {event.preventDefault()}
     this.props.onFolderChange(folder)
   }
 
@@ -68,9 +69,9 @@ class Inbox extends React.Component{
 	  
 	  
 	  const InboxFolder = 
-	    <a href='Inbox' onClick={(e) => this.handleClick('Inbox', e)}>
+	    <Link to='/inbox' onClick={(e) => this.handleClick('Inbox', e)}>
 	      Inbox { inboxUnreaded ? `(${inboxUnreaded})` : ''}
-	    </a>
+	    </Link>
 	  
 	  const toogleCollapseIcon = 
 	    <a href='#' className='my-cursor-pointer' onClick = {e => this.handleInboxToogle(!this.props.isInboxOpen)}>

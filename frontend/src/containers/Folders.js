@@ -1,8 +1,9 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 export function Draft (props) {
   function handleClick (folder, event) {
-    event.preventDefault()
+    //event.preventDefault()
     props.onFolderChange(folder)
   }
 
@@ -10,14 +11,14 @@ export function Draft (props) {
 
   return (
     <li className={`draftItem ${isActive}`}>
-      <a href='Draft' onClick={(e) => handleClick('Draft', e)}>Draft</a>
+      <Link to='/draft' onClick={(e) => handleClick('Draft', e)}>Draft</Link>
     </li>
   )
 }
 
 export function Sent (props) {
   function handleClick (folder, event) {
-    event.preventDefault()
+    //event.preventDefault()
     props.onFolderChange(folder)
   }
 
@@ -25,7 +26,7 @@ export function Sent (props) {
 
   return (
     <li className={`sentItem ${isActive}`}>
-      <a href='Sent' onClick={(e) => handleClick('Sent', e)}>Sent</a>
+      <Link to='/sent' onClick={(e) => handleClick('Sent', e)}>Sent</Link>
     </li>
   )
 }

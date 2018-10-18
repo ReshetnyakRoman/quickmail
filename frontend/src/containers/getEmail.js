@@ -2,36 +2,46 @@ import fetchWithTimeOut from '../containers/fetchWithTimeOut'
 import serverURL from '../config'
 import authorizedHeader from '../containers/authorizedHeader'
 
-export default async function getEmail(uid, component, silent=true) { 
-		console.log(`Start getting email uid: ${uid}`)
-		let getEmailLoadingTimer = setTimeout(() => component.setState({isLoading: !silent}), 500)
-    
-    const folder = component.state.currentFolder
-    const url = new URL(`${serverURL}/${folder}/${uid}?keepUnseen=${silent}`)
-    const config = {method: 'GET', headers: authorizedHeader(component)}
-    const timeout =  component.state.warningTimeout
-    var email
-
-  	await fetchWithTimeOut(url, config, timeout)
-    .then(res => res.json())
-    .then(
-    	res => {
-	    	if (res.success) {
-	    		email = res.email
-	    		component.setState(prevState =>{
-	    			if (!(folder in prevState.receivedEmails)) prevState.receivedEmails[folder] = []
-	    			prevState.receivedEmails[folder].push(res.email)	    			
-	    			return prevState
-	    		})
-	    	} else {
-	    		component.setState({contentBoxMessage: res.message})
-	    	}
-	    }, 
-    err => component.setState({contentBoxMessage: "Oops, can't get this email from server.", isLoading: false}))
-    .then(()=>console.log(`Email UID ${uid} downloaded`))
-    .then(() => clearTimeout(getEmailLoadingTimer))
-    
-    
-    
-    return email
+export default async function getEmail(component,uid, folderName) { 
+  console.log(`Start getting email uid: ${uid}`)
+  component.getEmailStatus = 'inprocess'
+  const url = new URL(`${serverURL}/${folderName}/`)
+  var params = {
+    stepsBack: 1, 
+    lastShownEmail: uid+1
   }
+  url.search = new URLSearchParams(params)
+  const config = {method: 'GET', headers: authorizedHeader(component)}
+
+
+  let result = await fetchWithTimeOut(url, config, 45000)
+      .then(res => res.json())
+      .then(
+    	res => {
+        	if (res.success) {
+                if(res.emailList[0].emailId === uid){
+                    component.getEmailStatus = 'success'
+                    component.setState({
+                        currentFolder:folderName,
+                        ContentBoxStatus: 'EmailIn',
+                        OpenEmailInData: res.emailList[0],
+                        OpenEmailInId:res.emailList[0].emailId
+                    })
+                    console.log(`Email UID ${uid} downloaded`)
+                }else {
+                    component.getEmailStatus = 'error'
+                    console.log(`No uid ${uid} in ${folderName}`)
+                }
+        		
+        	} else {
+                component.getEmailStatus = 'error'
+        		console.log(res.message)
+        	}
+        }, 
+      err => {
+        console.log(`Cant get uid:${uid} from ${folderName}`)
+        component.getEmailStatus = 'error'
+      })
+
+    return true
+  } 

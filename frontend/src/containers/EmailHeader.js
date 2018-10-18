@@ -6,7 +6,8 @@ import ReceivingDate from '../presentationals/ReceivingDate'
 import EmailControls from '../containers/EmailControls'
 import CollapseDetails from '../presentationals/CollapseDetails'
 import SendToInput from '../containers/SendToInput'
- 
+import {Link} from 'react-router-dom'
+
 class EmailHeader extends React.Component {
   constructor (props) {
     super(props)
@@ -47,13 +48,14 @@ class EmailHeader extends React.Component {
             onDeleteEmailClick={this.handleDeleteEmail} 
             folder={this.props.currentFolder} 
             emailId={this.props.emailInfo.emailId}/>
-
-          <i onClick = {this.handleCloseClick}
-            onTouchEnd = {this.handleCloseClick}
-            className='material-icons my-cursor-pointer  my-line-align-down my-icon'
-            style={{height: '24px'}}>
-          close
-          </i>
+          <Link to={`/${this.props.currentFolder.toLowerCase()}`} className='LinkToDefaults'>  
+            <i onClick = {this.handleCloseClick}
+              onTouchEnd = {this.handleCloseClick}
+              className='material-icons my-cursor-pointer  my-line-align-down my-icon'
+              style={{height: '24px'}}>
+            close
+            </i>
+          </Link>
         </div>
 
         <div className='d-flex p-1'>

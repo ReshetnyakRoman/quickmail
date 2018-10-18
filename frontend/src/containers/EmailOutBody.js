@@ -1,5 +1,4 @@
 import React from 'react'
-//import MyEditor from '../containers/MyEditor'
 import { NativeTypes } from 'react-dnd-html5-backend'
 import { DropTarget } from 'react-dnd'
 import { MyEditorLoadable } from '../App'

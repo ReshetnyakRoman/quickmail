@@ -16,7 +16,7 @@ async function collectUserDataAndLogin(response, loginType, accessToken, app){
       lastUID:0,
       UIDs:[]
       } 
-    //console.log(JSON.stringify(userData))
+    console.log(JSON.stringify(userData))
 
     var foldersWithInfo
     fetchWithTimeOut(`${serverURL}/auth`,{

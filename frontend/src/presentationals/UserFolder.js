@@ -1,6 +1,7 @@
 import React from 'react'
 import { DropTarget, ConnectDropTarget, DropTargetMonitor } from 'react-dnd'
 import Types from '../containers/ItemType'
+import {Link} from 'react-router-dom'
 
 const targetSubFolder = {
   drop(props,monitor,component){
@@ -29,7 +30,7 @@ function collect (connect,monitor){
 
 class UserFolder extends React.Component {
 	handleClick (folder,event) {
-		event.preventDefault()
+		//event.preventDefault()
 		this.props.onUserFolderClick(folder,event)
 	}
 
@@ -49,12 +50,12 @@ class UserFolder extends React.Component {
 		return (connectDropTarget && connectDropTarget(
       <li key={userFolder.folder} className={`${isActive} inbox`}>
       	{isOverCurrent && <div className={'onDrugHoverSub'} />}
-        <a href={userFolder.folder} 
+        <Link to={`/${userFolder.folder}`} 
           className={'user-folder'}
           onClick={(e) => this.handleClick(userFolder.folder, e)}>
           {decodeURI(userFolder.folder)}&nbsp;{ userFolder.unreaded ? `(${userFolder.unreaded})` : ''}
           
-        </a>
+        </Link>
         <i className='material-icons delete-folder my-cursor-pointer' 
           //style={{fontSize:'16px', position:'absolute',top:'6px',marginLeft:'10px'}}
           onClick={(e) => this.handleDeleteFolderClick(userFolder.folder)}>

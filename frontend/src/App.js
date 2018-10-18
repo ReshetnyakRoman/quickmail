@@ -1,19 +1,14 @@
 import React from 'react'
 import ScreenTypeContext from './containers/Context'
-//import SideBar from './containers/SideBar'
 import getUserFolders from './containers/getUserFolders'
-//import TopBar from './containers/TopBar'
 import EmailIn from './containers/EmailIn'
-//import EmailList from './containers/EmailList'
 import EmailOut from './containers/EmailOut'
 import NewMailButton from './presentationals/NewMailButton'
-//import LogIn from './presentationals/LogIn'
 import Notifications from './containers/Notifications'
 import AddFolder from './presentationals/AddFolder'
 import DeleteConfirmation from './presentationals/DeleteConfirmation'
 import ProgressBar from './presentationals/ProgressBar'
 import Loader from './presentationals/Loader'
-//import MainLoader from './presentationals/MainLoader'
 import {ControlsContext} from './containers/Context'
 import Modal from './presentationals/Modal'
 import {debounce} from 'throttle-debounce'
@@ -26,11 +21,15 @@ import serverURL, {domainName} from './config'
 import fetchWithTimeOut from './containers/fetchWithTimeOut'
 import findDifference from './containers/findDifference'
 import getEmailList from './containers/getEmailList'
+import getEmail from './containers/getEmail'
+import getUIDlist from './containers/getUIDlist'
 import authorizedHeader from './containers/authorizedHeader'
 import markUnread from './containers/markUnread'
 import {getLastShownUID, getFirstShownUID} from './containers/ShownUIDs'
 import Loadable from 'react-loadable'
 import Loading from './containers/CodeSplitLoading'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+
 
 class App extends React.Component {
   constructor (props) {
@@ -773,6 +772,70 @@ class App extends React.Component {
         onFooterButtonClick = {this.handleReplyClick}
         onDeleteDraftClick = {this.handleDeleteDraft}/>
     
+
+    const ContentBoxWithRoute = (
+      <Switch>
+        <Route
+          path='/:folder'
+          exact
+          render = {routeProps => 
+            { let routeFolder = routeProps.match.params.folder
+              let isRouteFolderValid = false
+              
+              for(let folder in this.state.emailList){
+                if (routeFolder === folder.toLowerCase()) {
+                  isRouteFolderValid = true
+                  routeFolder = folder
+                  break
+                }
+              }
+
+
+              if(this.state.currentFolder !== routeFolder && isRouteFolderValid){
+                this.setState({currentFolder:routeFolder, ContentBoxStatus: 'EmailList' })
+              }else if(!isRouteFolderValid){
+                return <Redirect to='/inbox' />
+              }
+              return ContentBox             
+            }
+          } />
+        
+        <Route 
+          path='/:folder/:uid'
+          exact
+          render = {routeProps => { 
+
+              let routeFolder = routeProps.match.params.folder
+              let routeUID = parseInt(routeProps.match.params.uid)
+              let isRouteFolderValid = false
+              let isRouteUIDvalid = !isNaN(routeUID) 
+
+              for(let folder in this.state.emailList){
+                if (routeFolder === folder.toLowerCase()) {
+                  isRouteFolderValid = true
+                  routeFolder = folder
+                  break
+                }
+              }
+
+              if(isRouteFolderValid && isRouteUIDvalid){
+                if( !(this.getEmailStatus) && this.state.OpenEmailInData === '') getEmail(this, routeUID, routeFolder)
+                if( this.getEmailStatus === 'error' && this.state.OpenEmailInData === '') {
+                  return <Redirect to='/inbox' />
+                }
+                
+                return ContentBox
+              }else {
+                return <Redirect to='/inbox' />
+              }
+            }
+        } />
+        
+        <Route exact render = {routeProps => <Redirect to='/inbox' />} />
+
+      </Switch>
+      )
+
     const emailOut = this.state.newEmailStatus === 'open'
       ? <EmailOut
         folder = {this.state.currentFolder}
@@ -790,69 +853,89 @@ class App extends React.Component {
         onModalClose={() => this.setState({modal: this.defaultModalState})}/> 
       : null
 
-    var  AppContent = null
-    if(this.state.isAppLoaded){
-      AppContent = this.state.isLoggedIn 
-      ? <div className = {blur}>
-          <SideBarLoadable
-            inboxUnreaded = {this.state.emailList['Inbox'].unreaded}
-            userInfo={this.state.currentUser}
-            folder = {this.state.currentFolder}
-            userFolders = {getUserFolders(this.state.emailList)}
-            isInboxOpen = {this.state.isInboxOpen} 
-            updateUnreaded = {(state)=>this.setState(state)}
-            onDeleteFolderClick = {(folder) => this.setState({folderToDelete: folder})}
-            onFolderChange = {this.handleCurrentFolder}
-            onNewEmailClick = {this.handleNewEmail}
-            onAddFolderClick = {this.handleAddFolderClick}
-            onInboxCollapseClick = {this.handleInboxToogle}
-            onExitClick = {this.handleExitClick } />
-          <div className='content'>
-          <TopBarLoadable 
-            isSearchVisible = {this.state.isSearchVisible}
-            contentBoxStatus = {this.state.ContentBoxStatus}
-            folder = {this.state.currentFolder} 
-            screnType = {this.state.screnType}
-            onSearchBarAction = {(searchState) => this.setState(searchState)}
-            onSearch = {this.handleSearch}
-            onEmptyTrash = {this.handleEmptyTrash}
-            />
-          <ErrorBoundary>
-            {ContentBox}
-          </ErrorBoundary>
-          {emailOut}
-          <NewMailButton className='my-hide-desktop' onNewEmailClick = {this.handleNewEmail} />
-          </div>
-        </div>
-      : <LogInLoadable 
-        onLoginError = {this.handleLoginError}
-        screnType={this.state.screnType} 
-        handleLoggedInState = {this.updateLoggedInState} 
-        handleCurrentUserData = {this.updateCurrentUserData}
-        handleFoldersInfo = {this.updateFoldersInfo}
-        isShowLoading = {(status) => this.setState({isLoading: status})}
-        onLoadingComplete = {(status) => this.setState({isAppLoaded:status}) } />
+    var AppContentWithRoute = null
+
+    if (this.state.isAppLoaded) {
+      AppContentWithRoute = (
+        <Switch>
+          <Route exact path='/welcome' render = {(routeProps) => {  
+            if (!this.state.isLoggedIn) {
+              return (
+                <LogInLoadable 
+                  onLoginError = {this.handleLoginError}
+                  screnType={this.state.screnType} 
+                  handleLoggedInState = {this.updateLoggedInState} 
+                  handleCurrentUserData = {this.updateCurrentUserData}
+                  handleFoldersInfo = {this.updateFoldersInfo}
+                  isShowLoading = {(status) => this.setState({isLoading: status})}
+                  onLoadingComplete = {(status) => this.setState({isAppLoaded:status}) } />
+              )} else {
+                return <Redirect to='/' />
+              }
+          }}/>
+
+          <Route render = {(routeProps) => {
+            if (this.state.isLoggedIn) { return (
+              <div className = {blur}>
+                <SideBarLoadable
+                  inboxUnreaded = {this.state.emailList['Inbox'].unreaded}
+                  userInfo={this.state.currentUser}
+                  folder = {this.state.currentFolder}
+                  userFolders = {getUserFolders(this.state.emailList)}
+                  isInboxOpen = {this.state.isInboxOpen} 
+                  updateUnreaded = {(state)=>this.setState(state)}
+                  onDeleteFolderClick = {(folder) => this.setState({folderToDelete: folder})}
+                  onFolderChange = {this.handleCurrentFolder}
+                  onNewEmailClick = {this.handleNewEmail}
+                  onAddFolderClick = {this.handleAddFolderClick}
+                  onInboxCollapseClick = {this.handleInboxToogle}
+                  onExitClick = {this.handleExitClick } />
+                <div className='content'>
+                <TopBarLoadable 
+                  isSearchVisible = {this.state.isSearchVisible}
+                  contentBoxStatus = {this.state.ContentBoxStatus}
+                  folder = {this.state.currentFolder} 
+                  screnType = {this.state.screnType}
+                  onSearchBarAction = {(searchState) => this.setState(searchState)}
+                  onSearch = {this.handleSearch}
+                  onEmptyTrash = {this.handleEmptyTrash}
+                  />
+                <ErrorBoundary>
+                  {ContentBoxWithRoute}
+                </ErrorBoundary>
+                {emailOut}
+                <NewMailButton className='my-hide-desktop' onNewEmailClick = {this.handleNewEmail} />
+                </div>
+              </div>)
+            } else {
+              return <Redirect to={{ pathname:'/welcome', state:{from: routeProps.location }, }} />
+            } 
+          }} />
+        </Switch>
+      )
     }
     
 
     return (
-      <div className='full-width'>
-        <React.StrictMode>
-          <ScreenTypeContext.Provider value = {this.state.screnType}>
-            <ControlsContext.Provider value = {this.handleControlsClick}>
-              {AppContent}
-              {/*<EmailItemDragLayer/>*/}
-              {modal}
-              {notification}
-              {loder}
-              {addFolder}
-              {deleteConfirmation}
-              {progressLoder}
-              {mainLoader}
-            </ControlsContext.Provider>
-          </ScreenTypeContext.Provider>
-        </React.StrictMode>
-      </div>
+      <BrowserRouter>
+        <div className='full-width'>
+          <React.StrictMode>
+            <ScreenTypeContext.Provider value = {this.state.screnType}>
+              <ControlsContext.Provider value = {this.handleControlsClick}>
+                {AppContentWithRoute}
+                {/*<EmailItemDragLayer/>*/}
+                {modal}
+                {notification}
+                {loder}
+                {addFolder}
+                {deleteConfirmation}
+                {progressLoder}
+                {mainLoader}
+              </ControlsContext.Provider>
+            </ScreenTypeContext.Provider>
+          </React.StrictMode>
+        </div>
+      </BrowserRouter>
     )
   }
 }

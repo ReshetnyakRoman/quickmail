@@ -1,19 +1,14 @@
 import React from 'react'
 import ScreenTypeContext from './containers/Context'
-//import SideBar from './containers/SideBar'
 import getUserFolders from './containers/getUserFolders'
-//import TopBar from './containers/TopBar'
 import EmailIn from './containers/EmailIn'
-//import EmailList from './containers/EmailList'
-//import EmailOut from './containers/EmailOut'
+import EmailOut from './containers/EmailOut'
 import NewMailButton from './presentationals/NewMailButton'
-//import LogIn from './presentationals/LogIn'
 import Notifications from './containers/Notifications'
 import AddFolder from './presentationals/AddFolder'
 import DeleteConfirmation from './presentationals/DeleteConfirmation'
 import ProgressBar from './presentationals/ProgressBar'
 import Loader from './presentationals/Loader'
-//import MainLoader from './presentationals/MainLoader'
 import {ControlsContext} from './containers/Context'
 import Modal from './presentationals/Modal'
 import {debounce} from 'throttle-debounce'
@@ -121,7 +116,7 @@ class App extends React.Component {
   componentDidMount () {
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
-    
+    MyEditorLoadable.preload()
   }
 
   handleLoginError (message) {
@@ -774,7 +769,7 @@ class App extends React.Component {
         onDeleteDraftClick = {this.handleDeleteDraft}/>
     
     const emailOut = this.state.newEmailStatus === 'open'
-      ? <EmailOutLoadable
+      ? <EmailOut
         folder = {this.state.currentFolder}
         emailData = {this.state.newEmailObj}
         isSavedIndVisible = {this.state.isSavedIndVisible.NewEmail}
@@ -908,10 +903,10 @@ const MainLoaderLoadable = Loadable({
   })
 
 
-const EmailOutLoadable = Loadable({
-  loader: () => import(/* webpackChunkName: "EmailOut" */ './containers/EmailOut'),
+const MyEditorLoadable = Loadable({
+  loader: () => import(/* webpackChunkName: "MyEditor" */ './containers/MyEditor'),
   loading: Loading,
-  dealy: 2000,
+  dealy: 300,
   timeout: 60000 //1min
   })
-
+export {MyEditorLoadable}

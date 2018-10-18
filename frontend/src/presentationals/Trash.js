@@ -1,6 +1,7 @@
 import React from 'react'
 import { DropTarget, ConnectDropTarget, DropTargetMonitor } from 'react-dnd'
 import Types from '../containers/ItemType'
+import {Link} from 'react-router-dom'
 
 const targetFolder = {
   drop(props,monitor,component){
@@ -29,7 +30,7 @@ function collect (connect,monitor){
 
 class Trash extends React.Component {
   handleClick (folder, event) {
-    event.preventDefault()
+    //event.preventDefault()
     this.props.onFolderChange(folder)
   }
 
@@ -44,7 +45,7 @@ class Trash extends React.Component {
     return (connectDropTarget && connectDropTarget(
       <li className={`trashItem ${isActive}`}>
         {isOverCurrent && <div className={'onDrugHover'} style={{top:'8px'}}/>}
-        <a href='Trash' onClick={(e) => this.handleClick('Trash', e)}>Trash</a>
+        <Link to='/trash' onClick={(e) => this.handleClick('Trash', e)}>Trash</Link>
       </li>
     ))
   }

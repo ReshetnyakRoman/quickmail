@@ -1,7 +1,8 @@
 import React from 'react'
 import connectedToSocials from '../containers/connectedToSocials'
 import withLoginToSocials from '../containers/withLoginToSocials'
- 
+import {Link} from 'react-router-dom'
+
 function LogIn (props) {
     return (
       <div className='login'>
@@ -22,12 +23,12 @@ function LogIn (props) {
               <img alt='facebook logo' src='./img/facebook-logo.png' />
             </button>
             <hr className='log-in-hr' />*/}
-
-            <button className='btn-vk' onClick={()=>props.login('VK')}>
-              Login with
-              <img alt='vk-logo' src='./img/vk-logo.svg' />
-            </button>
-
+            <Link to='/inbox' className='LinkToDefaults'>
+              <button className='btn-vk' onClick={()=>props.login('VK')}>
+                  Login with
+                  <img alt='vk-logo' src='./img/vk-logo.svg' />
+              </button>
+            </Link>
             <div className='about-block position-relative'>About project
               <div className='about-popup'>"QuickMail" is one more mail-service for you!
               <ul className=''>

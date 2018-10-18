@@ -9,6 +9,7 @@ import EmailControls from '../containers/EmailControls'
 import { DragSource, ConnectDragPreview, ConnectDragSource } from 'react-dnd'
 import Types from '../containers/ItemType'
 //import { getEmptyImage } from 'react-dnd-html5-backend'
+import {Link} from 'react-router-dom'
 
 const emailSource = {
   beginDrag (props, monitor, component){
@@ -77,16 +78,20 @@ class EmailListItem extends React.Component {
           <div className={`d-flex emailListItem mb-2`} style={{opacity:opacity }}>
            {connectDragSource(
               <div className={`d-flex full-width`}>
-                <Avatar 
-                  user = {this.props.emailInfo} 
-                  type = 'square' 
-                  onAvatarClick = {(e) => this.handleClick(e)}
-                  className = 'my-cursor-grab'/>
-                <div className='d-flex flex-column emailInfo pl-2 py-2' onClick={(e) => this.handleClick(e)}>
-                  <MailFrom emailInfo={this.props.emailInfo} view='short' status={this.props.emailInfo.isUnreaded} />
-                  <Subject emailInfo={this.props.emailInfo} view='short' />
-                  <Snippet emailInfo={this.props.emailInfo} view='short' />
-                </div>
+                  <Link to={`/${this.props.folder.toLowerCase()}/${this.props.emailInfo.emailId}`} className='LinkToDefaults'>
+                    <Avatar 
+                      user = {this.props.emailInfo} 
+                      type = 'square' 
+                      onAvatarClick = {(e) => this.handleClick(e)}
+                      className = 'my-cursor-grab'/>
+                  </Link>
+                  <div className='d-flex flex-column emailInfo pl-2 py-2' onClick={(e) => this.handleClick(e)}>
+                    <Link to={`/${this.props.folder.toLowerCase()}/${this.props.emailInfo.emailId}`} className='LinkToDefaults'>
+                      <MailFrom emailInfo={this.props.emailInfo} view='short' status={this.props.emailInfo.isUnreaded} />
+                      <Subject emailInfo={this.props.emailInfo} view='short' />
+                      <Snippet emailInfo={this.props.emailInfo} view='short' />
+                    </Link>
+                  </div>
                 <div className='d-flex flex-column emailListItem-border-right my-flex-align-center'>
                   <AttachmentIndicator emailInfo={this.props.emailInfo} className='pt-1' />
                   <ReceivingDate emailInfo={this.props.emailInfo} view='short' className='align-self-stretch' />

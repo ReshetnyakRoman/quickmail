@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 export default function AccountInfo (props) {
   
@@ -23,9 +24,11 @@ export default function AccountInfo (props) {
           <div className='account-text' style={{paddingBottom:0, marginBottom:0}}>{props.user.name}</div>
           <div className='account-text'>{props.user.email}</div>
           <div className='opt'>
-            <span className='opt-item isAccount' onClick={()=>logout()} alt='wright new email'>
-              Exit
-            </span>
+            <Link to='/welcome' className='LinkToDefaults'>
+              <span className='opt-item isAccount' onClick={()=>logout()} alt='wright new email'>
+                Exit
+              </span>
+            </Link>
             <div className='opt-item isSetting'>
               <svg>
                 <circle cx='35%' cy='50%' r='2' />
