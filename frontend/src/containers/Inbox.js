@@ -1,130 +1,149 @@
-import React from 'react'
-import UserFolder from '../presentationals/UserFolder'
-import { DropTarget, ConnectDropTarget, DropTargetMonitor } from 'react-dnd'
-import Types from '../containers/ItemType'
-import {Link} from 'react-router-dom'
+import React from "react";
+import UserFolder from "../presentationals/UserFolder";
+import { DropTarget, ConnectDropTarget, DropTargetMonitor } from "react-dnd";
+import Types from "../containers/ItemType";
+import { Link } from "react-router-dom";
 
 const targetFolder = {
-  drop (props,monitor,component){
-  	//if component dropped on itsefl do nothing
-    if(!component){
-    	return
+  drop(props, monitor, component) {
+    //if component dropped on itsefl do nothing
+    if (!component) {
+      return;
     }
-    const hasDroppedOnChild = monitor.didDrop()
+    const hasDroppedOnChild = monitor.didDrop();
     //if component dropped on child, do nothing
-    if(hasDroppedOnChild){
-    	return
+    if (hasDroppedOnChild) {
+      return;
     }
 
-    return {folder:'Inbox'}
-
+    return { folder: "Inbox" };
   },
 
-  hover (props, monitor, component) {
-  	if( monitor.isOver({ shallow: true }) ){
-  		component.handleInboxToogle(true)
-  	}
+  hover(props, monitor, component) {
+    if (monitor.isOver({ shallow: true })) {
+      component.handleInboxToogle(true);
+    }
   }
-}
+};
 
-function collect (connect,monitor){
+function collect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
     isOverCurrent: monitor.isOver({ shallow: true })
-  }
+  };
 }
 
-class Inbox extends React.Component{	
-  handleClick (folder, event) {
+class Inbox extends React.Component {
+  handleClick(folder, event) {
     //if(event) {event.preventDefault()}
-    this.props.onFolderChange(folder)
+    this.props.onFolderChange(folder);
   }
 
-  handleAddFolderClick (event) {
+  handleAddFolderClick(event) {
     //event.preventDefault()
-    this.props.onAddFolderClick(true)
+    this.props.onAddFolderClick(true);
   }
 
-  handleDeleteFolderClick(folder,event) {
-    this.props.onDeleteFolderClick(folder)
+  handleDeleteFolderClick(folder, event) {
+    this.props.onDeleteFolderClick(folder);
   }
 
-  handleInboxToogle (status) {
-    this.props.onInboxCollapseClick(status)
+  handleInboxToogle(status) {
+    this.props.onInboxCollapseClick(status);
   }
 
   render() {
-  	const defaultFolders = ['Trash','Sent','Draft']
-	  const {
-	  	isInboxOpen, 
-	  	userFolders, 
-	  	currentFolder, 
-	  	isOver, 
-	  	isOverCurrent,
-	  	connectDropTarget,
-	  	inboxUnreaded
-	  } = this.props
-	  const isActive =  defaultFolders.indexOf(currentFolder) !== -1 ? '' : 'isActive'
-	  
-	  
-	  const InboxFolder = 
-	    <Link to='/inbox' onClick={(e) => this.handleClick('Inbox', e)}>
-	      Inbox { inboxUnreaded ? `(${inboxUnreaded})` : ''}
-	    </Link>
-	  
-	  const toogleCollapseIcon = 
-	    <a href='#' className='my-cursor-pointer' onClick = {e => this.handleInboxToogle(!this.props.isInboxOpen)}>
-	      <i className='material-icons ml-2' style={{verticalAlign:'-7px'}}>
-	      	{isInboxOpen ? 'arrow_drop_down' : 'arrow_right'}
-	      </i>
-	    </a>
+    const defaultFolders = ["Trash", "Sent", "Draft"];
+    const {
+      isInboxOpen,
+      userFolders,
+      currentFolder,
+      isOver,
+      isOverCurrent,
+      connectDropTarget,
+      inboxUnreaded
+    } = this.props;
+    const isActive =
+      defaultFolders.indexOf(currentFolder) !== -1 ? "" : "isActive";
 
-	  const folders = userFolders.map(
-	    function (userFolder) {
-	      const isActive = currentFolder === userFolder.folder ? 'isActive' : ''
-	      
-	      return (
-	        <UserFolder 
-	        	key = {userFolder.folder}
-	        	userFolder = {userFolder} 
-	        	isActive = {isActive} 
-	        	unreaded = {userFolder.unreaded}
-	        	onDeleteFolderClick={(e) => this.handleDeleteFolderClick(e)}
-	        	onUserFolderClick={(e) => this.handleClick(e)}/>
-	      )
-	    },this)
+    const InboxFolder = (
+      <Link to="/inbox" onClick={e => this.handleClick("Inbox", e)}>
+        Inbox {inboxUnreaded ? `(${inboxUnreaded})` : ""}
+      </Link>
+    );
 
-	  const addNewFolder =  
-	    <li className='pb-2' key='newfolder'>
-	      <a className='small my-text-blue my-cursor-pointer' onClick={(e) => this.handleAddFolderClick(e)}>
-	        <i style = {{
-		        	verticalAlign:' -6px',
-							lineHeight: '16px',
-							fontSize:' 20px'
-						}}
-	        	className='material-icons'>add_box
-	        </i>
-	        &nbsp;new folder
-	      </a>
-	    </li>
+    const toogleCollapseIcon = (
+      <a
+        href="#"
+        className="my-cursor-pointer"
+        onClick={e => this.handleInboxToogle(!this.props.isInboxOpen)}
+      >
+        <i className="material-icons ml-2" style={{ verticalAlign: "-7px" }}>
+          {isInboxOpen ? "arrow_drop_down" : "arrow_right"}
+        </i>
+      </a>
+    );
 
-	  const inboxSubFolders = 
-	    <ul className={`inner-list ${isInboxOpen ? '' : 'collapse'} inbox-collapse`} >
-	      {addNewFolder}
-	      {folders}
-	    </ul>
+    const folders = userFolders.map(function(userFolder) {
+      const isActive = currentFolder === userFolder.folder ? "isActive" : "";
 
-	  return (connectDropTarget && connectDropTarget(
-		    <li className={`inboxItem ${isActive}`}>
-		    	{isOverCurrent && <div className={'onDrugHover'} style={{top:'8px'}}/>}
-		      {InboxFolder}
-		      {toogleCollapseIcon}
-		      {inboxSubFolders}
-		    </li>
-	    )
-	  )
-	}
+      return (
+        <UserFolder
+          key={userFolder.folder}
+          userFolder={userFolder}
+          isActive={isActive}
+          unreaded={userFolder.unreaded}
+          onDeleteFolderClick={e => this.handleDeleteFolderClick(e)}
+          onUserFolderClick={e => this.handleClick(e)}
+        />
+      );
+    }, this);
+
+    const addNewFolder = (
+      <li className="pb-2" key="newfolder">
+        <a
+          className="small my-text-blue my-cursor-pointer"
+          onClick={e => this.handleAddFolderClick(e)}
+        >
+          <i
+            style={{
+              verticalAlign: " -6px",
+              lineHeight: "16px",
+              fontSize: " 20px"
+            }}
+            className="material-icons"
+          >
+            add_box
+          </i>
+          &nbsp;new folder
+        </a>
+      </li>
+    );
+
+    const inboxSubFolders = (
+      <ul
+        className={`inner-list ${isInboxOpen ? "" : "collapse"} inbox-collapse`}
+      >
+        {addNewFolder}
+        {folders}
+      </ul>
+    );
+
+    return (
+      connectDropTarget &&
+      connectDropTarget(
+        <li className={`inboxItem ${isActive}`}>
+          {isOverCurrent && (
+            <div className={"onDrugHover"} style={{ top: "8px" }} />
+          )}
+          {InboxFolder}
+          {toogleCollapseIcon}
+          {inboxSubFolders}
+        </li>
+      )
+    );
+  }
 }
 
-export default DropTarget(Types.email, targetFolder, collect)(Inbox)
+export default DropTarget(Types.email, targetFolder, collect)(Inbox);

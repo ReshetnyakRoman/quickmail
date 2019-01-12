@@ -1,0 +1,16 @@
+https://tech.affirm.com/redux-patterns-and-anti-patterns-7d80ef3d53bc
+ImmutableJS
+one update
+state.set('loading', false)
+Multible updates
+state.withMutations(s => s.set('loading', false).set('user', user))
+
+react-addons-shallow-compare
+
+redux-saga or redux-thunk
+http://slides.com/joelkanzelmeyer/taming-large-redux-apps#/9/5
+
+reselect
+react-boilerplate
+https://github.com/react-boilerplate/react-boilerplate/tree/master/docs
+https://www.styled-components.com

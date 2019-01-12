@@ -66,7 +66,7 @@ export default function connectedToSocials (WrappedComponent) {
 
     componentDidMount () {
       // uncoment below line to allow Facebook login
-      //this.loadFBSDK() 
+      this.loadFBSDK() 
       this.loadVKSDK()
     }
 

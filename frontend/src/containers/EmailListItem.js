@@ -26,7 +26,7 @@ const emailSource = {
     const dropResult = monitor.getDropResult()
     const folder = dropResult.folder
     component.onDrop(item.id, folder)
-    //alert(`Email with id: ${item.id} moved to "${folder}"`)
+    alert(`Email with id: ${item.id} moved to "${folder}"`)
   }
 }
 

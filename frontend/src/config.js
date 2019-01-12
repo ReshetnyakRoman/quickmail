@@ -1,5 +1,5 @@
 //const serverURL = 'http://127.0.0.1:5000/api/v1'
-const serverURL = 'http://mail.stepanich.ru/api/v1'
+const serverURL = 'https://mail.stepanich.ru/api/v1'
 export default serverURL
 const domainName = '@stepanich.ru'
 export {domainName}

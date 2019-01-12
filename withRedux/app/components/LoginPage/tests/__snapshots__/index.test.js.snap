@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login /> shuld match with snapshot 1`] = `
+<div
+  className="Wrapper-sc-1hdt33b-0 iYKaEg"
+>
+  <div
+    className="Gradient-sc-6tvuvn-0 kjHljo"
+  />
+  <div
+    className="InnerWrapper-sc-11lo3ax-0 hQzgTZ"
+  >
+    <div
+      className="Content-ti2cat-0 ibldRS"
+    >
+      <div
+        className="Header__LocalWrapper-lctm7h-0 itWjfb"
+      >
+        <span
+          className="Header__WelcomeText-lctm7h-1 ckBlnb"
+        >
+          <span>
+            Welcome to
+          </span>
+        </span>
+        <br />
+        <span
+          className="Logo__LocalWrapper-sc-1701q42-0 iVPQGe"
+        >
+          <span
+            className="Logo__Red-sc-1701q42-1 jeqmVK"
+          >
+            Q
+          </span>
+          uick
+          <span
+            className="Logo__Blue-sc-1701q42-2 gJkmwB"
+          >
+            M
+          </span>
+          ail
+        </span>
+      </div>
+      <a
+        className="UnstyledLink-jf6ak-0 hrfucW"
+        href="/inbox"
+        onClick={[Function]}
+      >
+        <button
+          className="SocialButton__StyledButton-sc-1cxlgms-0 fVZbng"
+          onClick={[Function]}
+        >
+          <span>
+            Login with
+          </span>
+           
+          <img
+            alt="Facebook icon"
+            src="IMAGE_MOCK"
+          />
+        </button>
+      </a>
+      <hr
+        className="Hr-vtih0e-0 gXuhLt"
+      />
+      <a
+        className="UnstyledLink-jf6ak-0 hrfucW"
+        href="/inbox"
+        onClick={[Function]}
+      >
+        <button
+          className="SocialButton__StyledButton-sc-1cxlgms-0 CZpup"
+          onClick={[Function]}
+        >
+          <span>
+            Login with
+          </span>
+           
+          <img
+            alt="VK icon"
+            src="IMAGE_MOCK"
+          />
+        </button>
+      </a>
+      <div
+        className="About__LocalWrapper-jh9ul9-0 fsSTae"
+      >
+        <span>
+          About project
+        </span>
+        <div
+          className="PopUp About__PopUp-jh9ul9-1 cXNAFp"
+        >
+          <span>
+            "QuickMail" is one more mail-service for you!
+          </span>
+          <ul>
+            <li>
+              <span>
+                It's free
+              </span>
+            </li>
+            <li>
+              <span>
+                No registration, simply login with your socials
+              </span>
+            </li>
+            <li>
+              <span>
+                Clean & Simple Descktop and Mobile interface
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

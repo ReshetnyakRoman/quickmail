@@ -33,27 +33,27 @@ export default function withLoginToSocials (WrappedComponent) {
               console.log('User not logged in to VK')
               this.props.onLoadingComplete(true)
               this.props.isShowLoading(false)
-            //  window.fbLoaded.promise.then(() => { 
-            //    window.FB.getLoginStatus(function(response) {
-            //      
-            //      if (response.status === 'connected') {
-            //        console.log('connected to FB')
-            //        this.login('FB')
-            //      } else if (response.status === 'authorization_expired') {
-            //        console.log('FB authorization_expired')
-            //        this.props.onLoadingComplete(true)
-            //      }else if (response.status === 'not_authorized') {
-            //        console.log('not_authorized in FB and my application')
-            //        this.props.onLoadingComplete(true)
-            //        this.props.isShowLoading(false)
-            //      } else {
-            //        console.log('User not logged in to Facebook')
-            //        this.props.onLoadingComplete(true)
-            //        this.props.isShowLoading(false)
-            //      }
-            //     
-            //     }.bind(this)) 
-            //  })
+              window.fbLoaded.promise.then(() => { 
+                window.FB.getLoginStatus(function(response) {
+                  
+                  if (response.status === 'connected') {
+                    console.log('connected to FB')
+                    this.login('FB')
+                  } else if (response.status === 'authorization_expired') {
+                    console.log('FB authorization_expired')
+                    this.props.onLoadingComplete(true)
+                  }else if (response.status === 'not_authorized') {
+                    console.log('not_authorized in FB and my application')
+                    this.props.onLoadingComplete(true)
+                    this.props.isShowLoading(false)
+                  } else {
+                    console.log('User not logged in to Facebook')
+                    this.props.onLoadingComplete(true)
+                    this.props.isShowLoading(false)
+                  }
+                 
+                 }.bind(this)) 
+              })
 
             }
            
