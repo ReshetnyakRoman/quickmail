@@ -38,6 +38,9 @@ function AttachedDocs(props) {
     :hover:focus {
      background-color: ${theme.sideBarBorderColor};
     }
+     @media (max-width: 768px) {
+      padding: 8px 4px;
+    }
   }
   `;
   const StyledDiv = styled.div`
@@ -45,6 +48,9 @@ function AttachedDocs(props) {
     padding: 0 16px;
     margin: 8px 0;
     flex-wrap: wrap;
+    @media (max-width: 768px) {
+      margin-top: 32px;
+    }
   `;
 
   attachments = attachments.map((file, index) => (
@@ -73,9 +79,7 @@ function AttachedDocs(props) {
     </StyledP>
   ));
 
-  return (
-    <StyledDiv className="d-flex px-4 my-2 flex-wrap">{attachments}</StyledDiv>
-  );
+  return <StyledDiv>{attachments}</StyledDiv>;
 }
 
 AttachedDocs.propTypes = {

@@ -25,7 +25,8 @@ def createOsUser(name):
   proc1 = subprocess.Popen(['/bin/sudo','-S']+cmd, stdin=proc0.stdout, stderr = subprocess.PIPE, stdout = subprocess.PIPE)
   #proc.stdin.write((bytes(adminPassword,'UTF-8')))
   (stdout, sderr) = proc1.communicate()
-
+  print(stdout)
+  print(sderr)
   if 'password' not in sderr.decode():
     print('Error: {}'.format(sderr.decode()))
     return (False, {'name':'', 'psw':''})

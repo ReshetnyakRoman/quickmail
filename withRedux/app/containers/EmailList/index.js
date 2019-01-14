@@ -55,6 +55,7 @@ class EmailList extends React.Component {
     if (
       this.props.emailList.length === 0 &&
       this.props.currentFolder !== 'Search' &&
+      this.props.UIDsList.length &&
       !this.props.isEmailListLoading
     ) {
       this.props.handleLoader(true);
@@ -67,6 +68,7 @@ class EmailList extends React.Component {
       this.props.currentFolder !== prevProps.currentFolder &&
       this.props.emailList.length < emailsBatchToLoad &&
       this.props.emailList.length < this.props.UIDsList.length &&
+      this.props.UIDsList.length &&
       !this.props.isEmailListLoading
     ) {
       this.props.handleLoader(true);
@@ -77,7 +79,11 @@ class EmailList extends React.Component {
   shouldComponentUpdate(nextProps) {
     if (nextProps.isLoading) return false;
     if (nextProps.isEmailListLoading) return false;
-    if (this.props.emailList.length !== nextProps.emailList.length) return true;
+    if (
+      this.props.emailList.length !== nextProps.emailList.length &&
+      nextProps.UIDsList.length
+    )
+      return true;
     return true;
   }
 
@@ -154,11 +160,11 @@ class EmailList extends React.Component {
       list-style: none;
     `;
     return (
-      <AnimWrapper>
+      <React.Fragment>
         {message}
         <UnstyledList>{emails}</UnstyledList>
         {loadMore}
-      </AnimWrapper>
+      </React.Fragment>
     );
   }
 }

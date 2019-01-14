@@ -33,7 +33,7 @@ function EmailControls(props) {
     display: block;
     position: ${view === 'short' ? 'absolute' : 'relative'};
     top: -1.4rem;
-    right: ${view === 'short' ? '10%' : 0};
+    right: ${view === 'short' ? '0%' : 0};
     width: 180px;
     z-index: 2;
     flex-wrap: nowrap;
@@ -47,7 +47,7 @@ function EmailControls(props) {
     }
     @media (max-width: 768px) {
       top: -0.7rem;
-      right: -6px;
+      right: ${view === 'short' ? '20px' : 0};
       width: 180px;
     }
   `;
@@ -55,6 +55,7 @@ function EmailControls(props) {
     view === 'short' ? null : (
       <IconButton
         onClick={() => handleReply('replyAll', email, currentUser)}
+        onTouchEnd={() => handleReply('replyAll', email, currentUser)}
         type="replyAll"
         view={view}
       />
@@ -64,17 +65,24 @@ function EmailControls(props) {
     <Wrapper>
       <IconButton
         onClick={() => handleReply('reply', email, currentUser)}
+        onTouchEnd={() => handleReply('reply', email, currentUser)}
         type="reply"
         view={view}
       />
       {ReplyAll}
       <IconButton
         onClick={() => handleDeleteEmail(folder, email.emailId)}
+        onTouchEnd={() => handleDeleteEmail(folder, email.emailId)}
         type="delete"
         view={view}
       />
       <IconButton
-        onClick={() => handleMarkUnreaded(email.emailId, !email.isUnreaded)}
+        onClick={() => {
+          handleMarkUnreaded(email.emailId, !email.isUnreaded);
+        }}
+        onTouchEnd={() => {
+          handleMarkUnreaded(email.emailId, !email.isUnreaded);
+        }}
         type={status}
         view={view}
       />
@@ -100,6 +108,7 @@ const mapDispatchToProps = dispatch => ({
   handleMarkUnreaded: (uid, status) =>
     dispatch(markUnreadedAtServer(uid, status)),
   handleDeleteEmail: (folder, uid) => {
+    dispatch(updateContentBoxStatus('EmailList'));
     if (folder === 'Trash') dispatch(deleteEmail(uid));
     else dispatch(moveEmail('Trash', uid));
   },

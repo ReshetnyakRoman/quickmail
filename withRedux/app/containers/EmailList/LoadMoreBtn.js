@@ -17,7 +17,11 @@ const StyledButton = styled(Button)`
 `;
 
 const LoadMore = props => (
-  <StyledButton variant="outlined" onClick={() => props.onClick()}>
+  <StyledButton
+    variant="outlined"
+    onClick={() => props.onClick()}
+    onTouchEnd={() => props.onClick()}
+  >
     {props.children}
   </StyledButton>
 );

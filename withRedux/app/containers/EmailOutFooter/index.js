@@ -41,7 +41,10 @@ function EmailOutFooter(props) {
   const draftType = emailType === 'reply' ? 'ReplyEmail' : 'NewEmail';
   return isVisible ? (
     <Wrapper>
-      <MyBlueBtn onClick={() => sendEmail(draftType)}>
+      <MyBlueBtn
+        onClick={() => sendEmail(draftType)}
+        onTouchEnd={() => sendEmail(draftType)}
+      >
         <FormattedMessage {...messages.send} />
       </MyBlueBtn>
       <AttachFile

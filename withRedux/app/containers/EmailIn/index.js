@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Attachments from 'components/Attachments';
 import EmailBody from 'components/EmailBody';
 import Footer from 'containers/Footer';
+import styled from 'styled-components';
 import { updateContentBoxStatus } from '../App/actions';
 import Wrapper from './Wrapper';
 import ErrorBoundary from '../ErrorBoundary';
@@ -18,9 +19,11 @@ import ReplySection from '../ReplySection';
 class EmailIn extends React.PureComponent {
   render() {
     const { replyEmailStatus } = this.props;
+
     const footer =
       replyEmailStatus === 'closed' ? <Footer /> : <ReplySection />;
-
+    const replySection =
+      replyEmailStatus === 'closed' ? null : <ReplySection />;
     return (
       <Wrapper>
         <ErrorBoundary>

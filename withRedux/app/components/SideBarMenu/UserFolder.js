@@ -88,6 +88,7 @@ class UserFolder extends React.Component {
           <StyledDeleteForever
             className="material-icons delete-folder my-cursor-pointer"
             onClick={() => onDeleteFolderClick()}
+            onTouchEnd={() => onDeleteFolderClick()}
           />
         </li>,
       )

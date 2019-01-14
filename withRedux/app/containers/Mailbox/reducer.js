@@ -144,6 +144,13 @@ function emails(state = initialState, action) {
           s.setIn(['replyEmailObj', prop], fromJS(value));
         }
       });
+    case MARK_UNREADED:
+      const isEmailInOpen = state.get('openEmailInData', '') !== '';
+      if (isEmailInOpen)
+        return state.withMutations(s => {
+          s.setIn(['openEmailInData', 'isUnreaded'], action.isUnreaded);
+        });
+      return state;
     case RESET_TO_SYSTEM_INITIAL_STATE:
       return initialState;
     default:

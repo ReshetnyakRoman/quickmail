@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   background-color: ${props => props.theme.backgroundColorLight};
   color: ${props => props.theme.primaryTextColor};
   @media (max-width: 768px) {
-    margin: 16px 0px;
+    margin: 72px 0px 16px 0px;
   }
 `;
 

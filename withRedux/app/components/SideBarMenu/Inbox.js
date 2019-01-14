@@ -129,7 +129,10 @@ class Inbox extends React.Component {
     );
 
     const toogleCollapseIcon = (
-      <span onClick={() => onInboxCollapseClick(!isInboxOpen)}>
+      <span
+        onClick={() => onInboxCollapseClick(!isInboxOpen)}
+        onTouchEnd={() => onInboxCollapseClick(!isInboxOpen)}
+      >
         {isInboxOpen ? (
           <StyledArrowDropDown className="toogle" />
         ) : (
@@ -156,7 +159,10 @@ class Inbox extends React.Component {
 
     const addNewFolder = (
       <li key="newfolder">
-        <StyledA onClick={folder => onAddFolderClick(folder)}>
+        <StyledA
+          onClick={folder => onAddFolderClick(folder)}
+          onTouchEnd={folder => onAddFolderClick(folder)}
+        >
           <StyledAddBox />
           &nbsp;new folder
         </StyledA>

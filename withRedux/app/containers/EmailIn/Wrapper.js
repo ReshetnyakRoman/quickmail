@@ -26,18 +26,7 @@ function Wrapper(props) {
       width: calc(100% - 25px);
     }
   `;
-  return (
-    <Motion
-      defaultStyle={{ x: 70 }}
-      style={{ x: spring(0, animation.emailListConfig) }}
-    >
-      {({ x }) => (
-        <StyledDiv style={{ transform: `translateY(${x}%)` }}>
-          {props.children}
-        </StyledDiv>
-      )}
-    </Motion>
-  );
+  return <StyledDiv>{props.children}</StyledDiv>;
 }
 
 Wrapper.propTypes = {

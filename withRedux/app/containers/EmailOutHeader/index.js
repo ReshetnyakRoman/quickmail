@@ -67,6 +67,7 @@ class EmailOutHeader extends React.Component {
         <span
           className="my-cursor-pointer my-hover-underline"
           onClick={() => this.setState({ isCopyVisible: true })}
+          onTouchEnd={() => this.setState({ isCopyVisible: true })}
         >
           <FormattedMessage {...messages.copy} />
         </span>

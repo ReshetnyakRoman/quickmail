@@ -30,11 +30,11 @@ const Btn = props => {
     @media (max-width: 768px) {
       padding: 4px !important;
       min-width: 24px !important;
-      & span[class*='MuiButton-label'] {
+      & span:first-child {
         height: 36px !important;
         width: 36px !important;
       }
-      & span[class*='MuiButton-label'] svg {
+      & span:first-child svg {
         margin: 0px !important;
       }
 

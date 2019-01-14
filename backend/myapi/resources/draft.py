@@ -63,10 +63,10 @@ class draft(Resource):
 
         draftFolder = current_app.config['IMAP_DRAFT_FOLDER']
         decodedDraftID = base64.b64decode(draftMessageID)
-        print(decodedDraftID)
+        #print(decodedDraftID.decode("utf-8") )
         Mailbox =  makeNewIMAPconnection()
         Mailbox.login(MAIL_USERNAME, MAIL_PASSWORD)
-        success = deleteDraft(Mailbox, decodedDraftID, draftFolder) 
+        success = deleteDraft(Mailbox, decodedDraftID.decode("utf-8"), draftFolder) 
         Mailbox.logout()
 
         message = 'Draft deleted' if success else 'Cant delete draft' 

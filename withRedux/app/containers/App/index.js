@@ -27,7 +27,7 @@ export class App extends React.Component {
 
   componentDidMount() {
     this.updateWindowDimensions();
-    console.log('v11');
+    console.log('v12');
     window.addEventListener('resize', this.updateWindowDimensions);
   }
 
