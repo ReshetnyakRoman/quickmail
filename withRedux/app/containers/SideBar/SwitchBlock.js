@@ -7,7 +7,8 @@ const StyledDiv = styled.div`
   position: absolute;
   bottom: 40px;
   @media (max-width: 768px) {
-    bottom: 20px;
+    position: relative;
+    bottom: -20px;
   }
 `;
 

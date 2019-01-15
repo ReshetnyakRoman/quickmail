@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { withTheme } from '@callstack/react-theme-provider';
 
 const rotating = keyframes`
   50% {
@@ -30,7 +31,8 @@ const LoaderBoarders = styled.div`
   -o-animation: ${rotating} 2s ease-in-out infinite;
   -ms-animation: ${rotating} 2s ease-in-out infinite;
   animation: ${rotating} 2s ease-in-out infinite;
-  background-color: rgba(255, 255, 255, 0.69);
+  background-color: ${props => props.theme.blurLayerColor};
+
   ::before,
   ::after {
     content: '';
@@ -59,7 +61,7 @@ const LoaderBoarders = styled.div`
   & span {
     display: inline-block;
     postion: absolute;
-    color: #29363d;
+    color: ${props => props.theme.primaryTextColor};
     width: inherit;
     height: inherit;
     text-align: center;
@@ -74,4 +76,4 @@ const LoaderBoarders = styled.div`
   }
 `;
 
-export default LoaderBoarders;
+export default withTheme(LoaderBoarders);

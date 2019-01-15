@@ -35,6 +35,7 @@ const ligthTheme = {
   badegBG: '#f0f2f4',
   badgeText: '#212529',
   emailHeader: '#29363d',
+  blurLayerColor: 'rgba(255, 255, 255, 0.4)',
 };
 
 const darkTheme = {
@@ -64,6 +65,7 @@ const darkTheme = {
   badegBG: '#7f7f7f',
   badgeText: 'white',
   emailHeader: '#262626',
+  blurLayerColor: 'rgba(0, 0, 0, 0.3)',
 };
 
 export { ligthTheme, darkTheme, variantColors };

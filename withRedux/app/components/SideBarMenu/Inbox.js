@@ -129,10 +129,7 @@ class Inbox extends React.Component {
     );
 
     const toogleCollapseIcon = (
-      <span
-        onClick={() => onInboxCollapseClick(!isInboxOpen)}
-        onTouchEnd={() => onInboxCollapseClick(!isInboxOpen)}
-      >
+      <span onClick={() => onInboxCollapseClick(!isInboxOpen)}>
         {isInboxOpen ? (
           <StyledArrowDropDown className="toogle" />
         ) : (

@@ -15,7 +15,6 @@ const StyledBg = props => {
     overflow: auto;
     z-index: 6;
     transition: all 0.3s ease-in-out;
-    justify-content: flex-start !important;
     display: flex !important;
     flex-direction: column !important;
     border-right: 1px solid ${theme.sideBarBorderColor};

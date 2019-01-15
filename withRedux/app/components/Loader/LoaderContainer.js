@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { withTheme } from '@callstack/react-theme-provider';
 
 const LoaderContainer = styled.div`
   width: 100%;
@@ -20,8 +21,8 @@ const LoaderContainer = styled.div`
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: ${props => props.theme.blurLayerColor};
   display: flex;
 `;
 
-export default LoaderContainer;
+export default withTheme(LoaderContainer);
